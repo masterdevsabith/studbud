@@ -1,5 +1,5 @@
-import DashboardScreen from "../screen/DashboardScreen";
+import GreetingCard from "./widgets/GreetingsCard";
 
 export default function DashboardPage() {
-  return <DashboardScreen />;
+  return <GreetingCard />;
 }
