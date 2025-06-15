@@ -4,8 +4,8 @@ import Image from "next/image";
 export default function DashboardScreenPage() {
   return (
     <>
-      <section className="dashboard-main w-full flex items-center justify-center">
-        <div className="dashboard-greetings w-4/6 bg-blue-700 p-8 rounded-2xl relative overflow-hidden">
+      <section className="dashboard-main flex items-center justify-center ">
+        <div className="dashboard-greetings w-6/6 bg-blue-700 p-8 rounded-2xl relative overflow-hidden">
           <div className="z-10 max-w-[60%]">
             <h2 className="font-extrabold text-white text-5xl mb-2.5">
               Hello, Aromal 👋

@@ -1,6 +1,8 @@
 "use client";
 
 export default function Home() {
+
+  
   const handleNavigate = () => {
     window.open("/dashboard", "_self");
   };
