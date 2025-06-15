@@ -3,7 +3,7 @@ import Learning from "./Learnings";
 
 export default function MainSection() {
   return (
-    <div className="px-6 pt-4">
+    <div className="w-full px-6 pt-4 overflow-x-hidden">
       <GreetingCard />
       <Learning />
     </div>
