@@ -9,7 +9,7 @@ export default function Learning() {
         <br />
         <br />
         <code className="bg-teal-300 p-1 rounded-sm">
-          """ Implement a Video section"""
+          """ Implement a Video section """
         </code>
         <br />
         <br />
