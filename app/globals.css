@@ -120,3 +120,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+/*scroll bar related*/
+/* for smoother touch swiping */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* .custom-scrollbar::-webkit-scrollbar {
+  height: 1px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3b82f6; 
+  border-radius: 8px;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 transparent;
+} */
+
+.active-arrow {
+  display: flex;
+}
