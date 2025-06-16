@@ -4,14 +4,14 @@ import Task from "./widgets/Task";
 
 export default function DashboardPage() {
   return (
-    <main className="flex h-screen w-screen p-0 m-0 overflow-y-hidden">
+    <main className="h-screen flex">
       <div className="w-1/5">
         <Sidebar />
       </div>
-      <div className="w-3/5">
+      <div className="w-2/3">
         <MainSection />
       </div>
-      <div className="w-1/5 bg-gray-50">
+      <div className="w-1/5 ">
         <Task />
       </div>
     </main>
