@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="flex items-center justify-center bg-white h-dvh">
+    <section className="flex items-center justify-center bg-white h-dvh px-8">
       <div className="flex items-center justify-center">
         <div className="">
           <h1 className="text-4xl md:text-5xl font-extrabold text-black leading-tight">
@@ -25,7 +25,7 @@ export default function HeroSection() {
             </button>
           </div>
         </div>
-        <div className="">
+        <div className="hidden lg:block md:block">
           <Image
             src="/assets/Exams-bro.png"
             alt="Hero Illustration"
