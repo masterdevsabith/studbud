@@ -1,19 +1,20 @@
 "use client";
-
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Learning() {
-  const [selected, setSelected] = useState<string>()
+  const [selected, setSelected] = useState<string>("English");
   const tabs = [
     {
       id: 1,
       name: "Hindi",
       bgColor: "bg-red-200",
       videos: [
-        {
-          url: "https://www.youtube.com/watch?v=5OpCuCzux7E",
-          image: "https://img.youtube.com/vi/5OpCuCzux7E/hqdefault.jpg",
-        },
+        // {
+        //   url: "https://www.youtube.com/watch?v=5OpCuCzux7E",
+        //   image: "https://img.youtube.com/vi/5OpCuCzux7E/hqdefault.jpg",
+        // },
       ],
     },
     {
@@ -65,6 +66,31 @@ export default function Learning() {
       name: "Computer Science",
       bgColor: "bg-pink-200",
       videos: [
+        {
+          url: "https://www.youtube.com/watch?v=DLX62G4lc44",
+          image: "https://img.youtube.com/vi/DLX62G4lc44/hqdefault.jpg",
+        },
+
+        {
+          url: "https://www.youtube.com/watch?v=DLX62G4lc44",
+          image: "https://img.youtube.com/vi/DLX62G4lc44/hqdefault.jpg",
+        },
+        {
+          url: "https://www.youtube.com/watch?v=DLX62G4lc44",
+          image: "https://img.youtube.com/vi/DLX62G4lc44/hqdefault.jpg",
+        },
+        {
+          url: "https://www.youtube.com/watch?v=DLX62G4lc44",
+          image: "https://img.youtube.com/vi/DLX62G4lc44/hqdefault.jpg",
+        },
+        {
+          url: "https://www.youtube.com/watch?v=DLX62G4lc44",
+          image: "https://img.youtube.com/vi/DLX62G4lc44/hqdefault.jpg",
+        },
+        {
+          url: "https://www.youtube.com/watch?v=DLX62G4lc44",
+          image: "https://img.youtube.com/vi/DLX62G4lc44/hqdefault.jpg",
+        },
         {
           url: "https://www.youtube.com/watch?v=DLX62G4lc44",
           image: "https://img.youtube.com/vi/DLX62G4lc44/hqdefault.jpg",
@@ -163,14 +189,9 @@ export default function Learning() {
       tabsContainer.scrollBy({ left: 200, behavior: "smooth" });
     };
 
-    // Add scroll listener to update icons on scroll
     tabsContainer.addEventListener("scroll", manageIcons);
-
-    // Arrow click listeners
     leftArrow.addEventListener("click", handleLeftClick);
     rightArrow.addEventListener("click", handleRightClick);
-
-    // Initial check
     manageIcons();
 
     return () => {
@@ -179,26 +200,17 @@ export default function Learning() {
       rightArrow.removeEventListener("click", handleRightClick);
     };
   }, []);
+
+  const len = () => {
+    const videolen = tabs.find((tab) => tab.name === selected)?.videos.length;
+    return videolen;
+  };
+
+  const Videocount = len();
   return (
     <section className="mt-4 w-full">
       <div className="w-full">
         <h2 className="text-left text-2xl font-bold mb-4">Learning path</h2>
-        {/* <div className="dataaaaa">
-          <code className="bg-yellow-300 p-1 rounded-sm">
-            """ Implement a catogory tab consisting of subject names """
-          </code>
-          <br />
-          <br />
-          <code className="bg-teal-300 p-1 rounded-sm">
-            """ Implement a Video section"""
-          </code>
-          <br />
-          <br />
-          <code className="bg-fuchsia-300 p-1 rounded-sm">
-            """ The video should be based on the subject selected in the
-            catogory tab """
-          </code>
-        </div> */}
         <div className="tabs w-full relative flex items-center">
           <div className="left-arrow absolute h-full w-60 top-0 left-0 hidden items-center justify-start bg-gradient-to-r from-white to-transparent ">
             <svg
@@ -223,6 +235,7 @@ export default function Learning() {
             {tabs.map((tab) => (
               <li
                 key={tab.id}
+                onClick={() => setSelected(tab.name)}
                 className={` rounded-2xl inline ${tab.bgColor} px-4 py-2 text-sm font-medium text-gray-70 border-b-2 border-transparent cursor-pointer  select-none`}
               >
                 {tab.name}
@@ -246,9 +259,32 @@ export default function Learning() {
             </svg>
           </div>
         </div>
-
+        <h1>
+          {Videocount} {""}
+          {(Videocount ?? 0) > 1 ? "Videos" : "Video"}
+        </h1>
         <div>
-          {}
+          {(Videocount ?? 0) < 1 ? (
+            <p>No videos found</p>
+          ) : (
+            <div className="flex items-center justify-between flex-wrap pt-10 px-10 gap-10">
+              {tabs
+                .find((tab) => tab.name === selected)
+                ?.videos.map((videos, index) => (
+                  <div key={index}>
+                    <Link href={videos.url} target="_blank">
+                      <Image
+                        src={videos.image}
+                        alt={videos.url}
+                        width={400}
+                        height={400}
+                        className="rounded-3xl"
+                      />
+                    </Link>
+                  </div>
+                ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
