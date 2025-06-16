@@ -21,7 +21,7 @@ export default function Home() {
           </button>
         </div>
         <div>
-          <h2 className="text-center text-xl text-white pt-10">Current task</h2>
+          <h2 className="text-center text-xl text-white py-8">Current task</h2>
           <div>
             <code className="text-cyan-600">
               """" Niya """" :{" "}
@@ -33,6 +33,42 @@ export default function Home() {
                 &{" "}
                 <code className="bg-neutral-800 p-1 rounded-sm text-fuchsia-600">
                   /app/components/includes/navar.tsx
+                </code>{" "}
+                """
+              </span>
+            </code>
+
+            <br />
+
+            <br />
+            <code className="text-cyan-600">
+              """" Niya """" :{" "}
+              <span className="text-red-600">
+                """" Remove the codes in{" "}
+                <code className="bg-neutral-800 p-1 rounded-sm text-fuchsia-600">
+                  /app/page.tsx
+                </code>{" "}
+                Then import{" "}
+                <code className="bg-neutral-800 p-1 rounded-sm text-fuchsia-600">
+                  /app/components/Hero.tsx
+                </code>{" "}
+                &{" "}
+                <code className="bg-neutral-800 p-1 rounded-sm text-fuchsia-600">
+                  /app/components/includes/navar.tsx
+                </code>{" "}
+                in this page """
+              </span>
+            </code>
+
+            <br />
+
+            <br />
+            <code className="text-cyan-600">
+              """" Niya """" :{" "}
+              <span className="text-red-600">
+                """" UI of Navbar and Hero section can be found in{" "}
+                <code className="bg-neutral-800 p-1 rounded-sm text-fuchsia-600">
+                  /public/assets
                 </code>{" "}
                 """
               </span>
