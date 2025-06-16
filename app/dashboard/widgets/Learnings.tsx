@@ -242,7 +242,7 @@ export default function Learning() {
               </li>
             ))}
           </ul>
-          <div className="right-arrow absolute h-full  top-0 right-0 hidden items-center justify-end bg-gradient-to-l from-white to-transparent active-arrow">
+          <div className="right-arrow absolute h-full  top-0 right-0 hidden items-center justify-end bg-gradient-to-l from-white to-transparent ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
