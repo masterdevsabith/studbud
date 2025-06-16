@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import Hero from './components/Hero'; 
-import Navbar from './components/includes/Navbar';
+import Hero from "./components/Hero";
+import Navbar from "./components/includes/Navbar";
 
 export default function HomePage() {
   return (
@@ -11,7 +11,3 @@ export default function HomePage() {
     </main>
   );
 }
-
-
-                
-                

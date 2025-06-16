@@ -1,5 +1,4 @@
 import Forum from "../../widgets/Fourm";
-import MainSection from "../../widgets/MainSection";
 import Sidebar from "../../widgets/Sidebar";
 import Task from "../../widgets/Task";
 
