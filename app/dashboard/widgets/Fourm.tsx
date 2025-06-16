@@ -137,7 +137,16 @@ export default function FourmScreen() {
   return (
     <section className="forum p-6 ">
       <div className="top w-full flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">🌐 Class Community</h2>
+        {activeTab === "Announcement" && (
+          <h2 className="text-2xl font-bold">🌐 Announcements</h2>
+        )}
+        {activeTab === "Discussions" && (
+          <h2 className="text-2xl font-bold">🏫 Class Community</h2>
+        )}
+        {activeTab === "Files" && (
+          <h2 className="text-2xl font-bold">📂 Files</h2>
+        )}
+
         <Link
           className="p-2 bg-blue-600 rounded-md text-white font-bold"
           href="#"
