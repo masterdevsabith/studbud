@@ -1,6 +1,13 @@
+"use client";
+
+import clsx from "clsx";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function FourmScreen() {
+  const [activeTab, setActiveTab] = useState("Discussions");
+
+  const tabs = ["Announcement", "Discussions", "Files"];
   const forums = [
     {
       id: 1,
@@ -79,8 +86,10 @@ export default function FourmScreen() {
     },
   ];
 
+  useEffect(() => {}, []);
+
   return (
-    <section className="forum p-6">
+    <section className="forum p-6 ">
       <div className="top w-full flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">🌐 Class Community</h2>
         <Link
@@ -92,74 +101,91 @@ export default function FourmScreen() {
       </div>
 
       <div className="tabs w-full flex items-center justify-between mb-4 bg-gray-200 p-1 rounded-md">
-        <Link href="#" className="w-1/3 text-center  p-2 rounded-md">
-          Announcement
-        </Link>
-        <Link
-          href="#"
-          className="w-1/3 text-center active bg-white p-2 rounded-md"
-        >
-          Discussions
-        </Link>
-        <Link href="#" className="w-1/3 text-center p-2 rounded-md">
-          Files
-        </Link>
-      </div>
-
-      <div className="forum_posts">
-        {forums.map((forum) => (
-          <div
-            key={forum.id}
-            className="single_forum flex items-start justify-start gap-2 bg-gray-100 mb-2 p-4 rounded-md"
+        {tabs.map((tab, index) => (
+          <Link
+            key={index}
+            href="#"
+            onClick={() => setActiveTab(tab)}
+            className={clsx(
+              "w-1/3 text-center p-2 rounded-md transition",
+              activeTab === tab ? "bg-white font-bold" : "bg-gray-200"
+            )}
           >
-            <div className="user">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="size-10"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </div>
-            <div className="details">
-              <div className="name_and_timeAgo flex items-center mb-2">
-                <h3>{forum.user} • </h3>
-                <span>{forum.timeAgo}</span>
-              </div>
-              <h2 className="title mb-2 text-xl font-bold">{forum.title}</h2>
-              <p className="message mb-5">{forum.message}</p>
-              <div className="action_buttons flex items-center">
-                <div className="replies flex items-center gap-2 mr-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"
-                    />
-                  </svg>
-                  {forum.replies} replies
-                </div>
-
-                <Link href="#" className="">
-                  Join Discussion
-                </Link>
-              </div>
-            </div>
-          </div>
+            {tab}
+          </Link>
         ))}
       </div>
+
+      {activeTab === "Announcement" && (
+        <div className="announcement_tab mb-4 p-4 bg-yellow-100 rounded-md">
+          <h3 className="font-bold text-lg mb-2">Announcements</h3>
+          <p>No announcements at this time.</p>
+        </div>
+      )}
+
+      {activeTab === "Discussions" && (
+        <div className="forum_posts ">
+          {forums.map((forum) => (
+            <div
+              key={forum.id}
+              className="single_forum flex items-start justify-start border-1 gap-2 bg-gray-100 mb-4 p-4 rounded-md hover:drop-shadow-lg"
+            >
+              <div className="user">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="size-10"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div className="details">
+                <div className="name_and_timeAgo flex items-center mb-2">
+                  <h3>{forum.user} • </h3>
+                  <span>{forum.timeAgo}</span>
+                </div>
+                <h2 className="title mb-2 text-xl font-bold">{forum.title}</h2>
+                <p className="message mb-5">{forum.message}</p>
+                <div className="action_buttons flex items-center">
+                  <div className="replies flex items-center gap-2 mr-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"
+                      />
+                    </svg>
+                    {forum.replies} replies
+                  </div>
+
+                  <Link href="#" className="">
+                    Join Discussion
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {activeTab === "Files" && (
+        <div className="files_tab mb-4 p-4 bg-gray-100 rounded-md">
+          <h3 className="font-bold text-lg mb-2">Shared Files</h3>
+          <p>No files shared yet.</p>
+        </div>
+      )}
     </section>
   );
 }

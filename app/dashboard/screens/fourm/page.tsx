@@ -8,7 +8,7 @@ export default function Homework() {
       <div className="w-1/5 overflow-y-hidden">
         <Sidebar />
       </div>
-      <div className="w-3/5 overflow-y-scroll">
+      <div className="w-3/5 overflow-y-scroll scrollbar-hide">
         <Forum />
       </div>
       <div className="w-1/5 bg-gray-50 overflow-y-hidden">
