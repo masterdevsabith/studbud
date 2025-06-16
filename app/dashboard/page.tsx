@@ -4,7 +4,7 @@ import Task from "./widgets/Task";
 
 export default function DashboardPage() {
   return (
-    <main className="h-screen overflow-y-hidden">
+    <main className="h-screen flex">
       <div className="w-1/5">
         <Sidebar />
       </div>
