@@ -1,4 +1,4 @@
-import MainSection from "../../widgets/MainSection";
+import HomeWork from "../../widgets/HomeWork";
 import Sidebar from "../../widgets/Sidebar";
 import Task from "../../widgets/Task";
 
@@ -9,7 +9,7 @@ export default function Homework() {
         <Sidebar />
       </div>
       <div className="w-3/5 overflow-y-scroll">
-        <MainSection />
+        <HomeWork />
       </div>
       <div className="w-1/5 bg-gray-50 overflow-y-hidden">
         <Task />
