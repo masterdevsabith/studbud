@@ -1,26 +1,131 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Learning() {
+  const [selected, setSelected] = useState<string>()
   const tabs = [
-    { id: 1, name: "Hindi", bgColor: "bg-red-200" },
-    { id: 2, name: "Maths", bgColor: "bg-yellow-200" },
-    { id: 3, name: "English", bgColor: "bg-green-200" },
-    { id: 4, name: "Science", bgColor: "bg-blue-200" },
-    { id: 5, name: "Social Science", bgColor: "bg-purple-200" },
-    { id: 6, name: "Computer Science", bgColor: "bg-pink-200" },
-    { id: 7, name: "Biology", bgColor: "bg-lime-200" },
-    { id: 8, name: "Chemistry", bgColor: "bg-cyan-200" },
-    { id: 9, name: "Physics", bgColor: "bg-amber-200" },
-    { id: 10, name: "Environmental Studies", bgColor: "bg-teal-200" },
-    { id: 11, name: "Geography", bgColor: "bg-orange-200" },
-    { id: 12, name: "History", bgColor: "bg-rose-200" },
-    { id: 13, name: "Civics", bgColor: "bg-indigo-200" },
-    { id: 14, name: "Economics", bgColor: "bg-sky-200" },
-    { id: 15, name: "Malayalam", bgColor: "bg-fuchsia-200" },
-    { id: 16, name: "Sanskrit", bgColor: "bg-emerald-200" },
-    { id: 17, name: "Moral Science", bgColor: "bg-violet-200" },
+    {
+      id: 1,
+      name: "Hindi",
+      bgColor: "bg-red-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=5OpCuCzux7E",
+          image: "https://img.youtube.com/vi/5OpCuCzux7E/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Maths",
+      bgColor: "bg-yellow-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=K6Y9lFzI_m8",
+          image: "https://img.youtube.com/vi/K6Y9lFzI_m8/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "English",
+      bgColor: "bg-green-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=F5cMXo3L6vY",
+          image: "https://img.youtube.com/vi/F5cMXo3L6vY/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "Science",
+      bgColor: "bg-blue-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=f3Kk2k8QJxM",
+          image: "https://img.youtube.com/vi/f3Kk2k8QJxM/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 5,
+      name: "Social Science",
+      bgColor: "bg-purple-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=nW7KgfKnz9Q",
+          image: "https://img.youtube.com/vi/nW7KgfKnz9Q/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 6,
+      name: "Computer Science",
+      bgColor: "bg-pink-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=DLX62G4lc44",
+          image: "https://img.youtube.com/vi/DLX62G4lc44/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 7,
+      name: "Biology",
+      bgColor: "bg-lime-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=qgO6kGbvbZ8",
+          image: "https://img.youtube.com/vi/qgO6kGbvbZ8/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 8,
+      name: "Chemistry",
+      bgColor: "bg-cyan-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=FSyAehMdpyI",
+          image: "https://img.youtube.com/vi/FSyAehMdpyI/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 9,
+      name: "Physics",
+      bgColor: "bg-amber-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=1nziMkcyBOs",
+          image: "https://img.youtube.com/vi/1nziMkcyBOs/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 10,
+      name: "Environmental Studies",
+      bgColor: "bg-teal-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=4o_Mjcfj6jo",
+          image: "https://img.youtube.com/vi/4o_Mjcfj6jo/hqdefault.jpg",
+        },
+      ],
+    },
+    {
+      id: 11,
+      name: "Geography",
+      bgColor: "bg-orange-200",
+      videos: [
+        {
+          url: "https://www.youtube.com/watch?v=K1VYZM8ZqYQ",
+          image: "https://img.youtube.com/vi/K1VYZM8ZqYQ/hqdefault.jpg",
+        },
+      ],
+    },
   ];
 
   useEffect(() => {
@@ -140,6 +245,10 @@ export default function Learning() {
               />
             </svg>
           </div>
+        </div>
+
+        <div>
+          {}
         </div>
       </div>
     </section>

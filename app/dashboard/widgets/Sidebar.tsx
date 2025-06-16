@@ -20,8 +20,8 @@ export default function Sidebar() {
       icon: "",
     },
     {
-      tabName: "Assignments",
-      path: "/dashboard/home",
+      tabName: "Fourm",
+      path: "/dashboard/screens/fourm",
       icon: "",
     },
     {
