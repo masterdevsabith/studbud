@@ -8,7 +8,7 @@ export default function HeroSection() {
       <div className="flex items-center justify-between gap-20">
         <div className="">
           <h1 className="text-4xl md:text-5xl font-bold text-black leading-tight pb-4">
-            Find the right course
+            Find the right <span className="text-orange-500">course</span>
             <br />
             for you
           </h1>
