@@ -5,6 +5,12 @@ import { Tabs } from "@/app/types";
 import { useState } from "react";
 import { Home } from "lucide-react";
 import { usePathname } from "next/navigation";
+import {
+  HomeIcon,
+  MessagesSquare,
+  BookOpenText,
+  BookCheck,
+} from "lucide-react";
 
 interface Active {
   activeTab: string;
@@ -17,22 +23,22 @@ export default function Sidebar() {
     {
       tabName: "Dashboard",
       path: "/dashboard/",
-      icon: "",
+      icon: HomeIcon,
     },
     {
       tabName: "Fourm",
       path: "/dashboard/screens/fourm",
-      icon: "",
+      icon: MessagesSquare,
     },
     {
       tabName: "Homework",
       path: "/dashboard/screens/homework",
-      icon: "",
+      icon: BookOpenText,
     },
     {
       tabName: "Exam",
       path: "/dashboard/home",
-      icon: "",
+      icon: BookCheck,
     },
   ];
 
@@ -41,7 +47,7 @@ export default function Sidebar() {
   };
 
   return (
-    <section className="h-screen bg-blue-600 p-0">
+    <section className="h-screen bg-gray-50 p-0">
       <div>
         <h3 className="flex justify-center pt-6">
           <Image
@@ -55,14 +61,23 @@ export default function Sidebar() {
           {tabs.map((tab, index) => {
             const isActive =
               pathname === tab.path || pathname === tab.path.replace(/\/$/, "");
+            const Icon = tab.icon;
             return (
               <div key={index}>
                 <button
-                  className={`w-full py-3 font-medium  ${
-                    isActive ? "bg-white text-black" : "bg-blue-400 text-white"
-                  } hover:bg-blue-300 transition-colors duration-300 `}
+                  className={`w-full py-3 font-medium flex items-center justify-start px-16  ${
+                    isActive
+                      ? "bg-gray-200 text-black border-l-6 border-sky-500"
+                      : "bg-gray-100 text-black border-l-6 border-gray-100"
+                  } hover:bg-gray-100 transition-colors duration-300 `}
                   onClick={() => handlePath(tab.path)}
                 >
+                  <Icon
+                    size={20}
+                    className={`mr-5  ${
+                      isActive ? "text-sky-500" : "text-black"
+                    }`}
+                  />
                   {tab.tabName}
                 </button>
               </div>

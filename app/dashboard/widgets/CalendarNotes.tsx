@@ -43,6 +43,7 @@ export default function CalendarNotes() {
 
   return (
     <section className="calendar_and_notes">
+      {/* <h3>Plan Your Day</h3> */}
       <Calendar
         className="mb-5 "
         onChange={setDate}
