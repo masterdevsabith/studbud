@@ -150,3 +150,26 @@
 .active-arrow {
   display: flex;
 }
+
+/* calendar styles warning */
+.react-calendar {
+  padding: 8px;
+  border-radius: 8px;
+}
+.react-calendar__navigation {
+}
+.react-calendar__month-view__days {
+}
+.react-calendar__tile {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  margin: 2px;
+}
+.react-calendar__tile--active {
+  border-radius: 8px;
+}
+.react-calendar__tile--now {
+  border-radius: 8px;
+  background-color: rgb(193, 193, 193);
+}
