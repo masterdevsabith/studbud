@@ -8,7 +8,7 @@ export default function DashboardPage() {
       <div className="w-1/5">
         <Sidebar />
       </div>
-      <div className="w-2/3">
+      <div className="w-3/5">
         <MainSection />
       </div>
       <div className="w-1/5 ">

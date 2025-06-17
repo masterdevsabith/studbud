@@ -41,7 +41,7 @@ export default function Sidebar() {
   };
 
   return (
-    <section className="h-screen bg-gray-100 p-0">
+    <section className="h-screen bg-blue-600 p-0">
       <div>
         <h3 className="flex justify-center pt-6">
           <Image
@@ -58,9 +58,9 @@ export default function Sidebar() {
             return (
               <div key={index}>
                 <button
-                  className={`w-full py-3 ${
-                    isActive ? "bg-neutral-500 text-white" : "bg-stone-200"
-                  } hover:bg-neutral-400`}
+                  className={`w-full py-3 font-medium  ${
+                    isActive ? "bg-white text-black" : "bg-blue-400 text-white"
+                  } hover:bg-blue-300 transition-colors duration-300 `}
                   onClick={() => handlePath(tab.path)}
                 >
                   {tab.tabName}
