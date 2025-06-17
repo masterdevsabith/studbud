@@ -13,7 +13,7 @@ import {
 
 export function BentoGridDemo() {
   return (
-    <BentoGrid className="max-w-4xl mx-auto">
+    <BentoGrid className="max-w-7xl mx-auto">
       {items.map((item, i) => (
         <BentoGridItem
           key={i}
@@ -75,4 +75,3 @@ const items = [
     icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
   },
 ];
-
