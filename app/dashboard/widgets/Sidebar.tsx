@@ -10,6 +10,7 @@ import {
   MessagesSquare,
   BookOpenText,
   BookCheck,
+  Layers,
 } from "lucide-react";
 
 interface Active {
@@ -39,6 +40,11 @@ export default function Sidebar() {
       tabName: "Exam",
       path: "/dashboard/home",
       icon: BookCheck,
+    },
+    {
+      tabName: "Flashcards",
+      path: "/dashboard/screens/flashcard",
+      icon: Layers,
     },
   ];
 
