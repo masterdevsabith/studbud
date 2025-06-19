@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlashCardDeck from "@/app/components/includes/FlashcardDeck";
 import SingleFlashCard from "@/app/components/includes/SingleFlashCard";
 
 export default function FlashCards() {
   const [selectedDeck, setSelectedDeck] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState("");
   //   const [decks, setDecks] = useState([
   //     {
   //       title: "Biology Basics",
@@ -48,8 +49,9 @@ export default function FlashCards() {
     {
       title: "Biology Basics",
       cardCount: 10,
-      time: "8 min",
+      time: "8 ",
       progress: 70,
+      subject: "Biology",
       cards: [
         { question: "What is the basic unit of life?", answer: "Cell" },
         {
@@ -61,8 +63,9 @@ export default function FlashCards() {
     {
       title: "Math Essentials",
       cardCount: 12,
-      time: "10 min",
+      time: "10 ",
       progress: 40,
+      subject: "Maths",
       cards: [
         { question: "What is 7 x 8?", answer: "56" },
         { question: "What is the value of π?", answer: "Approximately 3.1416" },
@@ -71,8 +74,9 @@ export default function FlashCards() {
     {
       title: "History Overview",
       cardCount: 8,
-      time: "6 min",
+      time: "6 ",
       progress: 90,
+      subject: "History",
       cards: [
         {
           question: "Who was the first President of the USA?",
@@ -84,8 +88,9 @@ export default function FlashCards() {
     {
       title: "Physics Formulas",
       cardCount: 15,
-      time: "11 min",
+      time: "11 ",
       progress: 55,
+      subject: "Physics",
       cards: [
         { question: "What is Newton's Second Law?", answer: "F = ma" },
         { question: "Speed formula?", answer: "Speed = Distance / Time" },
@@ -94,8 +99,9 @@ export default function FlashCards() {
     {
       title: "Chemistry Core",
       cardCount: 9,
-      time: "7 min",
+      time: "7 ",
       progress: 60,
+      subject: "Chemistry",
       cards: [
         { question: "Symbol for Sodium?", answer: "Na" },
         { question: "Atomic number of Oxygen?", answer: "8" },
@@ -104,8 +110,9 @@ export default function FlashCards() {
     {
       title: "English Grammar",
       cardCount: 14,
-      time: "9 min",
+      time: "9 ",
       progress: 75,
+      subject: "English",
       cards: [
         { question: "What is a noun?", answer: "A person, place, or thing" },
         {
@@ -115,6 +122,7 @@ export default function FlashCards() {
       ],
     },
   ]);
+
   return (
     <section className="flashcards p-6 bg-gray-50 h-full">
       {selectedDeck ? (
@@ -155,9 +163,17 @@ export default function FlashCards() {
               </div>
               <div className="question_and_answer w-full flex justify-center p-8">
                 <SingleFlashCard
-                  frontText="sample question"
-                  backText="sample answer"
+                  // question_and_answers={decks.map((deck) => deck.cards)}
+                  question_and_answers={selectedDeck.cards}
                 />
+                {/* {flipped ? (
+                  <div>
+                    <button>yeah i know</button>
+                    <button>yeah i don't know</button>
+                  </div>
+                ) : (
+                  <></>
+                )} */}
               </div>
             </div>
           </>
@@ -170,7 +186,10 @@ export default function FlashCards() {
                 cardsCount={deck.cardCount}
                 timeTaken={deck.time}
                 progress={deck.progress}
-                onClick={() => setSelectedDeck(deck)}
+                onClick={() => {
+                  setSelectedDeck(deck);
+                  setSelectedSubject(deck.subject);
+                }}
               />
             ))}
 
