@@ -152,16 +152,8 @@ export default function FlashCards() {
                   Reset
                 </button>
               </div>
-              <div className="progress_and_details">
-                <div className="top mb-2 flex items-center justify-between text-gray-700">
-                  <span>Progress : 1/6</span>
-                  <span>✅0|❌6</span>
-                </div>
-                <div className="bottom">
-                  <div className="progressbar w-full h-3 rounded-full bg-sky-600"></div>
-                </div>
-              </div>
-              <div className="question_and_answer w-full flex justify-center p-8">
+
+              <div className="question_and_answer w-full flex justify-center ">
                 <SingleFlashCard
                   // question_and_answers={decks.map((deck) => deck.cards)}
                   question_and_answers={selectedDeck.cards}

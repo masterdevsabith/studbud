@@ -17,6 +17,10 @@ export default function SingleFlashCard({
   const [frontText, setFrontText] = useState("");
   const [backText, setBackText] = useState("");
 
+  //flashcard markings
+  const [correctCount, setCorrectCount] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
+
   //set of question answer bundle for the respective subjects
   const [questionAnswerBundle, setQuestionAnswerBundle] =
     useState(question_and_answers);
@@ -29,63 +33,125 @@ export default function SingleFlashCard({
     }
   }, [question_and_answers]);
 
-  //flashcard func
-  const handleNext = () => {
-    if (currentIndex + 1 < questionAnswerBundle.length) {
-      setFlipped(false);
+  //flashcard func (old handleNext)
+  // const handleNext = () => {
+  //   if (currentIndex + 1 < questionAnswerBundle.length) {
+  //     setFlipped(false);
 
-      //Wait for animation to complete before switching content
-      setTimeout(() => {
-        const nextIndex = currentIndex + 1;
+  //     //Wait for animation to complete before switching content
+  //     setTimeout(() => {
+  //       const nextIndex = currentIndex + 1;
+  //       setCurrentIndex(nextIndex);
+  //       setFrontText(questionAnswerBundle[nextIndex].question);
+  //       setBackText(questionAnswerBundle[nextIndex].answer);
+  //     }, 300);
+  //   } else {
+  //     alert("🎉 You've finished all the flashcards!");
+  //   }
+  // };
+
+  //updated handleNext
+  const handleNext = () => {
+    setFlipped(false);
+    setTimeout(() => {
+      const nextIndex = currentIndex + 1;
+      if (nextIndex < questionAnswerBundle.length) {
         setCurrentIndex(nextIndex);
         setFrontText(questionAnswerBundle[nextIndex].question);
         setBackText(questionAnswerBundle[nextIndex].answer);
-      }, 300);
-    } else {
-      alert("🎉 You've finished all the flashcards!");
-    }
+      } else {
+        alert("🎉 You've finished all the flashcards!");
+        window.location.reload();
+      }
+    }, 300);
+  };
+
+  //marking func
+  const handleCorrect = () => {
+    setCorrectCount((prev) => prev + 1);
+    handleNext();
+  };
+
+  const handleWrong = () => {
+    setWrongCount((prev) => prev + 1);
+    // Don't increment progress visually
+    setFlipped(false);
+    setTimeout(() => {
+      const nextIndex = currentIndex + 1;
+      if (nextIndex < questionAnswerBundle.length) {
+        setCurrentIndex(nextIndex);
+        setFrontText(questionAnswerBundle[nextIndex].question);
+        setBackText(questionAnswerBundle[nextIndex].answer);
+      } else {
+        alert("Come back later and try Again 😂😹💀");
+        window.location.reload();
+      }
+    }, 300);
   };
 
   return (
-    <section className="flex flex-col items-center justify-center">
-      <div
-        className="w-120 h-80 drop-shadow-xl  rounded-md perspective"
-        onClick={() => setFlipped(!flipped)}
-      >
-        <div
-          className={`relative w-full h-full duration-500 border-2 border-gray-300 rounded-md transform-style-preserve-3d transition-transform ${
-            flipped ? "rotate-y-180" : ""
-          }`}
-        >
-          {/* Front */}
-          <div className="absolute w-full h-full backface-hidden bg-white  rounded-md flex items-center justify-center shadow-md">
-            <p className="text-lg font-semibold">{frontText}</p>
-          </div>
-
-          {/* Back */}
-          <div className="absolute w-full h-full backface-hidden bg-sky-400  rounded-md rotate-y-180 flex items-center justify-center shadow-md">
-            <p className="text-lg font-semibold">{backText}</p>
+    <section className="single_page_for_flashcards w-full">
+      <div className="progress_and_details w-full mb-5">
+        <div className="top mb-2 flex items-center justify-between text-gray-700">
+          <span>
+            Progress: {correctCount + wrongCount}/{questionAnswerBundle.length}
+          </span>
+          <span>
+            ✅ {correctCount} | ❌ {wrongCount}
+          </span>
+        </div>
+        <div className="bottom">
+          <div className="w-full h-3 rounded-full bg-gray-200 overflow-hidden">
+            <div
+              className="progressbar w-full h-3 rounded-full bg-sky-600"
+              style={{
+                width: `${(correctCount / questionAnswerBundle.length) * 100}%`,
+                transition: "width 0.3s ease-in-out",
+              }}
+            ></div>
           </div>
         </div>
       </div>
-      {flipped ? (
-        <div className="buttons mt-4 flex items-center justify-center gap-3">
-          <button
-            onClick={handleNext}
-            className="p-2 bg-green-100 border-1 border-green-400 rounded-md text-green-600 font-bold"
+      <section className="flex flex-col items-center justify-center">
+        <div
+          className="w-120 h-80 drop-shadow-xl  rounded-md perspective"
+          onClick={() => setFlipped(!flipped)}
+        >
+          <div
+            className={`relative w-full h-full duration-500 border-2 border-gray-300 rounded-md transform-style-preserve-3d transition-transform ${
+              flipped ? "rotate-y-180" : ""
+            }`}
           >
-            ✅ I Got it
-          </button>
-          <button
-            onClick={handleNext}
-            className="p-2 bg-red-100 border-1 border-red-600 rounded-md text-red-600 font-bold"
-          >
-            ❌ I didn't Know
-          </button>
+            {/* Front */}
+            <div className="absolute w-full h-full backface-hidden bg-white  rounded-md flex items-center justify-center shadow-md">
+              <p className="text-lg font-semibold">{frontText}</p>
+            </div>
+
+            {/* Back */}
+            <div className="absolute w-full h-full backface-hidden bg-sky-400  rounded-md rotate-y-180 flex items-center justify-center shadow-md">
+              <p className="text-lg font-semibold">{backText}</p>
+            </div>
+          </div>
         </div>
-      ) : (
-        <></>
-      )}
+        {flipped ? (
+          <div className="buttons mt-4 flex items-center justify-center gap-3">
+            <button
+              onClick={handleCorrect}
+              className="p-2 bg-green-100 border-1 border-green-400 rounded-md text-green-600 font-bold"
+            >
+              ✅ I Got it
+            </button>
+            <button
+              onClick={handleWrong}
+              className="p-2 bg-red-100 border-1 border-red-600 rounded-md text-red-600 font-bold"
+            >
+              ❌ I didn't Know
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+      </section>
     </section>
   );
 }
