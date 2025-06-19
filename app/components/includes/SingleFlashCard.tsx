@@ -31,16 +31,21 @@ export default function SingleFlashCard({
 
   //flashcard func
   const handleNext = () => {
-    const nextIndex = currentIndex + 1;
-    if (nextIndex < questionAnswerBundle.length) {
-      setCurrentIndex(nextIndex);
-      setFrontText(questionAnswerBundle[nextIndex].question);
-      setBackText(questionAnswerBundle[nextIndex].answer);
+    if (currentIndex + 1 < questionAnswerBundle.length) {
       setFlipped(false);
+
+      //Wait for animation to complete before switching content
+      setTimeout(() => {
+        const nextIndex = currentIndex + 1;
+        setCurrentIndex(nextIndex);
+        setFrontText(questionAnswerBundle[nextIndex].question);
+        setBackText(questionAnswerBundle[nextIndex].answer);
+      }, 300);
     } else {
       alert("🎉 You've finished all the flashcards!");
     }
   };
+
   return (
     <section className="flex flex-col items-center justify-center">
       <div
