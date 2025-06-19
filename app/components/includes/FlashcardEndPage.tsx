@@ -4,6 +4,8 @@ interface FlashcardEndPageProps {
   total: number;
   onRetry: () => void;
   onGoHome: () => void;
+  onRetryWrong?: () => void;
+  hasWrongCards?: boolean;
 }
 
 export default function FlashcardEndPage({
@@ -12,6 +14,8 @@ export default function FlashcardEndPage({
   total,
   onRetry,
   onGoHome,
+  onRetryWrong,
+  hasWrongCards,
 }: FlashcardEndPageProps) {
   const percentage = Math.round((correctCount / total) * 100);
 
@@ -43,8 +47,16 @@ export default function FlashcardEndPage({
         >
           🔁 Try Again
         </button>
+        {hasWrongCards && onRetryWrong && (
+          <button
+            onClick={onRetryWrong}
+            className="px-5 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+          >
+            🔁 Retry Wrong Flashcards
+          </button>
+        )}
         <button
-          onClick={() => window.location.reload()}
+          onClick={onGoHome}
           className="px-5 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800"
         >
           🏠 Go Home

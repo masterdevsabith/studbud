@@ -25,6 +25,11 @@ export default function SingleFlashCard({
   //flashcard achievements
   const [finished, setFinished] = useState(false);
 
+  //tracking wrong flash cards
+  const [wrongCards, setWrongCards] = useState<
+    Array<{ question: string; answer: string }>
+  >([]);
+
   //set of question answer bundle for the respective subjects
   const [questionAnswerBundle, setQuestionAnswerBundle] =
     useState(question_and_answers);
@@ -77,7 +82,7 @@ export default function SingleFlashCard({
 
   const handleWrong = () => {
     setWrongCount((prev) => prev + 1);
-    // Don't increment progress visually
+    setWrongCards((prev) => [...prev, questionAnswerBundle[currentIndex]]);
     setFlipped(false);
     setTimeout(() => {
       const nextIndex = currentIndex + 1;
@@ -91,6 +96,25 @@ export default function SingleFlashCard({
     }, 300);
   };
 
+  //retrying wrong flashcards
+  const retryWrongFlashcards = () => {
+    if (wrongCards.length === 0) {
+      setQuestionAnswerBundle(question_and_answers);
+      setFrontText(question_and_answers[0].question);
+      setBackText(question_and_answers[0].answer);
+    } else {
+      setQuestionAnswerBundle(wrongCards);
+      setCurrentIndex(0);
+      setCorrectCount(0);
+      setWrongCount(0);
+      setFinished(false);
+      setFlipped(false);
+      setFrontText(wrongCards[0].question);
+      setBackText(wrongCards[0].answer);
+      setWrongCards([]); // optional: reset wrong list
+    }
+  };
+
   return (
     <section className="single_page_for_flashcards w-full">
       {finished ? (
@@ -99,6 +123,7 @@ export default function SingleFlashCard({
           wrongCount={wrongCount}
           total={questionAnswerBundle.length}
           onRetry={() => {
+            setQuestionAnswerBundle(question_and_answers);
             setCurrentIndex(0);
             setCorrectCount(0);
             setWrongCount(0);
@@ -108,8 +133,10 @@ export default function SingleFlashCard({
           }}
           onGoHome={() => {
             // Redirect or call parent handler here
-            window.location.href = "/"; // Or use router.push("/") if using next/router
+            window.location.reload(); // Or use router.push("/") if using next/router
           }}
+          onRetryWrong={retryWrongFlashcards}
+          hasWrongCards={wrongCards.length > 0}
         />
       ) : (
         <>
