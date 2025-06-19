@@ -64,7 +64,6 @@ export default function SingleFlashCard({
         setFrontText(questionAnswerBundle[nextIndex].question);
         setBackText(questionAnswerBundle[nextIndex].answer);
       } else {
-        alert("🎉 You've finished all the flashcards!");
         setFinished(true);
       }
     }, 300);
@@ -87,7 +86,6 @@ export default function SingleFlashCard({
         setFrontText(questionAnswerBundle[nextIndex].question);
         setBackText(questionAnswerBundle[nextIndex].answer);
       } else {
-        alert("Come back later and try Again 😂😹💀");
         setFinished(true);
       }
     }, 300);
