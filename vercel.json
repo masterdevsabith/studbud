@@ -1,0 +1,14 @@
+{
+    "rewrites": [
+        {
+            "source": "/",
+            "has": [
+                {
+                    "type": "host",
+                    "value": ":subdomain.yourdomain.com"
+                }
+            ],
+            "destination": "/s/:subdomain"
+        }
+    ]
+}

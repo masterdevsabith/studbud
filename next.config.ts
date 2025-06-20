@@ -8,10 +8,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "img.youtube.com",
         pathname: "/**",
-        port: ""
+        port: "",
       },
     ],
   },
+  allowedDevOrigins: ["127.0.0.1.nip.io", "*.127.0.0.1.nip.io"],
 };
 
 export default nextConfig;

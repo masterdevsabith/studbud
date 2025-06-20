@@ -8,7 +8,7 @@ export default function DashboardScreenPage() {
         <div className="dashboard-greetings w-6/6 bg-blue-700 p-8 rounded-2xl relative overflow-hidden">
           <div className="z-10 max-w-[60%]">
             <h2 className="font-extrabold text-white text-5xl mb-2.5">
-              Hello, Aromal 👋
+              Hello, Sabith 👋
             </h2>
             <p className="font-normal text-gray-300 text-xl mb-7">
               How was your day ? <br />

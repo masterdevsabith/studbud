@@ -2,13 +2,13 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { BentoGrid, BentoGridItem } from "./bento-grid";
 import {
-  IconArrowWaveRightUp,
-  IconBoxAlignRightFilled,
-  IconBoxAlignTopLeft,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
+  IconNotebook,
+  IconLayoutGrid,
+  IconCards,
+  IconClipboardList,
+  IconChartBar,
+  IconLayoutDashboard,
+  IconSchool,
 } from "@tabler/icons-react";
 
 export function BentoGridDemo() {
@@ -32,46 +32,49 @@ const Skeleton = () => (
 );
 const items = [
   {
-    title: "The Dawn of Innovation",
-    description: "Explore the birth of groundbreaking ideas and inventions.",
+    title: "Master Your Homework",
+    description: "Easily track assignments and never miss a due date again.",
     header: <Skeleton />,
-    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
+    icon: <IconNotebook className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Digital Revolution",
-    description: "Dive into the transformative power of technology.",
-    header: <Skeleton />,
-    icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
-  },
-  {
-    title: "The Art of Design",
-    description: "Discover the beauty of thoughtful and functional design.",
-    header: <Skeleton />,
-    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
-  },
-  {
-    title: "The Power of Communication",
+    title: "Smart Class Management",
     description:
-      "Understand the impact of effective communication in our lives.",
+      "Organize classes, schedules, and daily routines effortlessly.",
     header: <Skeleton />,
-    icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    icon: <IconLayoutGrid className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Pursuit of Knowledge",
-    description: "Join the quest for understanding and enlightenment.",
+    title: "Boost with Flashcards",
+    description: "Revise faster with intelligent and interactive flashcards.",
     header: <Skeleton />,
-    icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
+    icon: <IconCards className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Joy of Creation",
-    description: "Experience the thrill of bringing ideas to life.",
+    title: "Quick Forms & Polls",
+    description:
+      "Create and respond to forms, quizzes, and class polls instantly.",
     header: <Skeleton />,
-    icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
+    icon: <IconClipboardList className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Spirit of Adventure",
-    description: "Embark on exciting journeys and thrilling discoveries.",
+    title: "Track Academic Progress",
+    description: "Stay motivated with insights into your learning journey.",
     header: <Skeleton />,
-    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
+    icon: <IconChartBar className="h-4 w-4 text-neutral-500" />,
+  },
+  {
+    title: "Personalized Dashboard",
+    description:
+      "Get a clear view of tasks, subjects, and goals all in one place.",
+    header: <Skeleton />,
+    icon: <IconLayoutDashboard className="h-4 w-4 text-neutral-500" />,
+  },
+  {
+    title: "Your School Companion",
+    description:
+      "StudBud is built to make every school day easier and smarter.",
+    header: <Skeleton />,
+    icon: <IconSchool className="h-4 w-4 text-neutral-500" />,
   },
 ];
