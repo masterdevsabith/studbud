@@ -1,8 +1,7 @@
+"use client";
 
-'use client';
-
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
 const SeeItInAction = () => {
   return (
@@ -12,7 +11,7 @@ const SeeItInAction = () => {
           <iframe
             width="100%"
             height="100%"
-            src="https://www.youtube.com/embed/5MgBikgcWnY"
+            src="https://www.youtube.com/embed/WZ8g6deOyAk?si=pyacVqEajwsh1rMK"
             title="English Lesson Video"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -26,7 +25,8 @@ const SeeItInAction = () => {
             See It In Action
           </h2>
           <p className="text-gray-600 mb-6">
-            Watch how students, teachers, and administrators use our platform to streamline their daily workflows and improve learning outcomes.
+            Watch how students, teachers, and administrators use our platform to
+            streamline their daily workflows and improve learning outcomes.
           </p>
           <ul className="space-y-3 mb-6 text-gray-700">
             <li className="flex items-center gap-2">
@@ -46,7 +46,7 @@ const SeeItInAction = () => {
               <span>Mobile-first responsive design</span>
             </li>
           </ul>
-          <button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white py-2 px-6 rounded-full font-semibold hover:scale-105 transition-transform">
+          <button className="bg-gradient-to-r from-sky-500 to-sky-600 text-white py-2 px-6 rounded-full font-semibold hover:scale-105 transition-transform">
             🎮 Try Live Demo
           </button>
         </div>

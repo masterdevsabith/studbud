@@ -30,51 +30,57 @@ export function BentoGridDemo() {
 const Skeleton = () => (
   <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
 );
+const ImageHeader = ({ src }: { src: string }) => (
+  <div
+    className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-cover bg-top"
+    style={{ backgroundImage: `url(${src})` }}
+  />
+);
 const items = [
   {
     title: "Master Your Homework",
     description: "Easily track assignments and never miss a due date again.",
-    header: <Skeleton />,
+    header: <ImageHeader src="/assets/hw.png" />,
     icon: <IconNotebook className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Smart Class Management",
     description:
       "Organize classes, schedules, and daily routines effortlessly.",
-    header: <Skeleton />,
+    header: <ImageHeader src="/assets/class-management.png" />,
     icon: <IconLayoutGrid className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Boost with Flashcards",
     description: "Revise faster with intelligent and interactive flashcards.",
-    header: <Skeleton />,
+    header: <ImageHeader src="/assets/flashcard.png" />,
     icon: <IconCards className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Quick Forms & Polls",
     description:
       "Create and respond to forms, quizzes, and class polls instantly.",
-    header: <Skeleton />,
+    header: <ImageHeader src="/assets/forms.jpg" />,
     icon: <IconClipboardList className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Track Academic Progress",
     description: "Stay motivated with insights into your learning journey.",
-    header: <Skeleton />,
+    header: <ImageHeader src="/assets/planner.png" />,
     icon: <IconChartBar className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Personalized Dashboard",
     description:
       "Get a clear view of tasks, subjects, and goals all in one place.",
-    header: <Skeleton />,
+    header: <ImageHeader src="/assets/dashboard.png" />,
     icon: <IconLayoutDashboard className="h-4 w-4 text-neutral-500" />,
   },
   {
     title: "Your School Companion",
     description:
       "StudBud is built to make every school day easier and smarter.",
-    header: <Skeleton />,
+    header: <ImageHeader src="/assets/announcements.png" />,
     icon: <IconSchool className="h-4 w-4 text-neutral-500" />,
   },
 ];
