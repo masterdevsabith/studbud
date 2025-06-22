@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
+
 import FlashCardDeck from "@/app/components/includes/FlashcardDeck";
 import SingleFlashCard from "@/app/components/includes/SingleFlashCard";
 
@@ -232,6 +234,49 @@ export default function FlashCards() {
     },
   ]);
 
+  //modal details + flashcard func
+  type FlashcardContent = {
+    details?: {
+      subject?: string;
+      [key: string]: any;
+    };
+    [key: string]: any;
+  };
+
+  type FlashcardType = {
+    content: FlashcardContent[];
+    progress?: number;
+    [key: string]: any;
+  } | null;
+
+  const [flashcard, setFlashcard] = useState<FlashcardType[]>([]);
+
+  const [showModal, setShowModal] = useState(false);
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchFlashcard = async () => {
+      const flashId = localStorage.getItem("flash_id");
+      if (!flashId) {
+        console.warn("⚠️ No flash_id in localStorage");
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          `https://studbud-backend-server.onrender.com/api/v1/get/flashcard/${flashId}`
+        );
+        setFlashcard(response.data);
+        console.log("📦 Flashcard data:", response.data);
+      } catch (error) {
+        console.error("❌ Error fetching flashcard:", error);
+      }
+    };
+
+    fetchFlashcard();
+  }, []);
+
   return (
     <section className="flashcards p-6 bg-gray-50 h-full">
       {selectedDeck ? (
@@ -279,22 +324,30 @@ export default function FlashCards() {
             </div>
           </>
         ) : (
+          //earlier use deck now flashcard
           <>
-            {decks.map((deck, index) => (
-              <FlashCardDeck
-                key={index}
-                title={deck.title}
-                cardsCount={deck.cards.length}
-                timeTaken={deck.time}
-                progress={deck.progress}
-                onClick={() => {
-                  setSelectedDeck(deck);
-                  setSelectedSubject(deck.subject);
-                }}
-              />
-            ))}
-
-            <div className="addnewdeck w-1/3 max-w-[30%] hover:scale-105 bg-white drop-shadow-md hover:drop-shadow-lg border-dashed border-2 border-gray-300 hover:border-2 hover:border-sky-500 transition-all duration-100z p-4 rounded-md">
+            {flashcard.map((card, index) =>
+              card ? (
+                <FlashCardDeck
+                  key={index}
+                  title={card.content[0]?.details?.subject}
+                  cardsCount={
+                    card.content?.length ? card.content.length - 1 : 0
+                  }
+                  timeTaken={card.content[0]?.details?.time}
+                  progress={card.progress || 0}
+                  onClick={() => {
+                    const qaCards = card.content?.slice(1) || [];
+                    setSelectedDeck({ cards: qaCards });
+                    setSelectedSubject(card.subject);
+                  }}
+                />
+              ) : null
+            )}
+            <div
+              className="addnewdeck w-1/3 max-w-[30%] hover:scale-105 bg-white drop-shadow-md hover:drop-shadow-lg border-dashed border-2 border-gray-300 hover:border-2 hover:border-sky-500 transition-all duration-100z p-4 rounded-md"
+              onClick={() => setShowModal(true)}
+            >
               <div className="texts flex flex-col items-center justify-center h-full text-center">
                 <h2 className="text-4xl font-extrabold text-gray-600">+</h2>
                 <h4 className="text-lg font-medium">Create new deck</h4>
@@ -303,6 +356,70 @@ export default function FlashCards() {
                 </p>
               </div>
             </div>
+            {showModal && (
+              <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                <div className="bg-white p-6 rounded-xl shadow-lg w-[400px] relative">
+                  <button
+                    className="absolute top-2 right-3 text-gray-600 text-xl"
+                    onClick={() => setShowModal(false)}
+                  >
+                    ×
+                  </button>
+                  <h3 className="text-xl font-bold mb-4">🧠 Create New Deck</h3>
+
+                  <div className="mb-4">
+                    <label className="block mb-1 text-sm font-semibold text-gray-700">
+                      📺 YouTube Video Link
+                    </label>
+                    <input
+                      type="text"
+                      onChange={(e) => setYoutubeUrl(e.target.value)}
+                      value={youtubeUrl}
+                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                      placeholder="Paste your YouTube link"
+                    />
+                  </div>
+
+                  <button
+                    className="w-full mt-2 bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 transition-all"
+                    onClick={async () => {
+                      if (!youtubeUrl)
+                        return alert("Paste a YouTube link first");
+
+                      try {
+                        setLoading(true);
+                        const response = await axios.post(
+                          "https://studbud-backend-server.onrender.com/api/v1/generate/flashcard",
+                          { videoUrl: youtubeUrl }
+                        );
+
+                        console.log("✅ Flashcards received:", response.data);
+
+                        // const flashId = response.data[0].flash_id;
+                        const flashId = "766faffd-4706-4c82-ac86-0b667117a2d7";
+                        localStorage.setItem("flash_id", flashId);
+
+                        console.log(
+                          "✅ flash_id saved in localStorage:",
+                          flashId
+                        );
+
+                        // optional reset
+                        setYoutubeUrl("");
+                        setShowModal(false);
+                      } catch (error) {
+                        console.error("❌ Failed to fetch flashcards:", error);
+                        alert("Something went wrong.");
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                  >
+                    {loading ? "Generating..." : "Generate"}
+                  </button>
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>

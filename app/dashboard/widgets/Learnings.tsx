@@ -23,8 +23,8 @@ export default function Learning() {
       bgColor: "bg-yellow-200",
       videos: [
         {
-          url: "https://www.youtube.com/watch?v=K6Y9lFzI_m8",
-          image: "https://img.youtube.com/vi/K6Y9lFzI_m8/hqdefault.jpg",
+          url: "https://youtu.be/mR8A-0IoSHE?si=se5WXVjWbU0JlIYv",
+          image: "https://i.ytimg.com/an_webp/pB9jEYO2oaA/mqdefault_6s.webp",
         },
       ],
     },
