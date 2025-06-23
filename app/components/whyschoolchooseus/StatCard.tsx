@@ -14,7 +14,7 @@ const StatCard: React.FC<StatCardProps> = ({
   description,
 }) => {
   return (
-    <div className="bg-gradient-to-t from-sky-400 to-sky-500 hover:from-sky-500 hover:to-sky-600  backdrop-blur-md rounded-2xl p-6 text-center text-white transition-transform transform hover:scale-105 hover:shadow-xl duration-300">
+    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 text-center text-white transition-all duration-300 hover:border-1 hover:border-sky-400 hover:shadow-md hover:shadow-sky-800 hover:scale-105">
       <div className="text-4xl mb-4">{icon}</div>
       <p className="text-yellow-400 text-2xl font-bold mb-1">{percentage}</p>
       <h3 className="font-semibold text-lg mb-1">{title}</h3>

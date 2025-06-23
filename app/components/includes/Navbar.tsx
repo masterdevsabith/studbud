@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="w-full flex items-center justify-between px-10 py-4 fixed bg-white/50 backdrop-blur-2xl z-50">
-      <div className="text-lg font-bold text-gray-800">LOGO.</div>
+    <nav className="w-full flex items-center justify-between px-10 py-4 fixed bg-gray-800/50 backdrop-blur-2xl z-50">
+      <div className="text-lg font-bold text-white">LOGO.</div>
 
-      <div className="hidden md:flex space-x-8 text-gray-700 font-medium">
+      <div className="hidden md:flex space-x-8 text-gray-500 font-medium">
         <Link href="#" className="text-sky-500">
           Home
         </Link>

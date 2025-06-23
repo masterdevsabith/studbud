@@ -12,7 +12,7 @@ import Footer from "./components/footer/Footer";
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="bg-[#0D0D0D]">
       <Navbar />
       <Hero />
       <BentoGridDemo />

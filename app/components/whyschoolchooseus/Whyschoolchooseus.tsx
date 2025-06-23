@@ -33,12 +33,12 @@ const WhySchoolsChooseUs = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-r from-white to-sky-50 py-20 px-4">
+    <section className="bg-gradient-to-b from-[#0D0D0D] to-gray-900 py-20 px-4">
       <div className="max-w-6xl mx-auto text-center text-white mb-12">
-        <h2 className="text-3xl font-bold flex items-center justify-center gap-2 mb-2 text-black">
+        <h2 className="text-3xl font-bold flex items-center justify-center gap-2 mb-2 text-white">
           🎯 Why Schools Choose Us
         </h2>
-        <p className="text-gray-600">
+        <p className="text-gray-200">
           Real results that matter to students, teachers, and administrators
         </p>
       </div>

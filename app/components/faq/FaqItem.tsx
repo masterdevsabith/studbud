@@ -1,8 +1,7 @@
+"use client";
 
-'use client';
-
-import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react'; // optional for icon toggle
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react"; // optional for icon toggle
 
 type FaqItemProps = {
   question: string;
@@ -21,9 +20,17 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer }) => {
         <h3 className="font-semibold text-gray-800">{question}</h3>
         {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </div>
-      {open && (
-        <p className="mt-3 text-gray-600 text-sm leading-relaxed">{answer}</p>
-      )}
+      <div
+        className={`grid transition-all duration-300 overflow-hidden ${
+          open
+            ? "grid-rows-[1fr] opacity-100 mt-3"
+            : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <p className="text-gray-600 text-sm leading-relaxed overflow-hidden">
+          {answer}
+        </p>
+      </div>
     </div>
   );
 };

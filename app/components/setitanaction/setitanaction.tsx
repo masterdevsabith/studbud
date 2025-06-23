@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const SeeItInAction = () => {
   return (
-    <section className="py-20 px-4 bg-gradient-to-r from-white to-blue-50">
+    <section className="py-20 px-4 bg-gradient-to-b from-gray-900 to-[#0D0D0D]">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-gray-200">
           <iframe
@@ -20,15 +20,15 @@ const SeeItInAction = () => {
 
         {/* Right: Text + Icons */}
         <div>
-          <h2 className="text-3xl font-bold flex items-center gap-2 mb-4">
+          <h2 className="text-3xl text-white font-bold flex items-center gap-2 mb-4">
             <span>🎥</span>
             See It In Action
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-200 mb-6">
             Watch how students, teachers, and administrators use our platform to
             streamline their daily workflows and improve learning outcomes.
           </p>
-          <ul className="space-y-3 mb-6 text-gray-700">
+          <ul className="space-y-3 mb-6 text-gray-300">
             <li className="flex items-center gap-2">
               <span>✨</span>
               <span>Intuitive dashboard design</span>
