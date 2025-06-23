@@ -209,7 +209,7 @@ export default function Hero() {
             className="absolute right-[-510px] bottom-[-759px] left-[-532px] aspect-[2.346820809248555/1] h-[956px] rounded-[100%] shadow-[inset_0_2px_20px_#fff,0_-10px_50px_1px_#ffffff7d] dark:bg-black"
             style={{
               boxShadow:
-                "inset 0 2px 22.8022px #000000, 0 -10px 52.8022px 1px rgba(255, 255, 255, 0.53)",
+                "inset 0 2px 22.8022px #ffffff, 0 -10px 52.8022px 1px rgba(255, 255, 255, 0.53)",
               backgroundColor: "#000000",
             }}
           ></div>

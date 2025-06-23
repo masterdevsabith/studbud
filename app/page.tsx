@@ -9,10 +9,12 @@ import WhySchoolsChooseUs from "./components/whyschoolchooseus/Whyschoolchooseus
 import FaqSection from "./components/faq/Faqsection";
 import Banner from "./components/banner/Banner";
 import Footer from "./components/footer/Footer";
+import Chat from "./components/ui/Chat";
 
 export default function HomePage() {
   return (
     <main className="bg-[#0D0D0D]">
+      <Chat />
       <Navbar />
       <Hero />
       <BentoGridDemo />
