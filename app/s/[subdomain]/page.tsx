@@ -1,8 +1,8 @@
 import { getSubdomain } from "@/lib/subdomain";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
 const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+import Login from "./auth/Login";
 
 export async function generateMetadata({
   params,
@@ -35,13 +35,5 @@ export default async function subdomainPage({
   if (!subdomainData) {
     notFound();
   }
-  return (
-    <section>
-      <div>
-        <h1>
-          Hey {subdomain}.{rootDomain}
-        </h1>
-      </div>
-    </section>
-  );
+  return <Login />;
 }

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-// import Link from "next/link";
+import Link from "next/link";
 
 export default function Hero() {
   const handleCopy = () => {
@@ -12,11 +12,12 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden mb-10">
-      <div className="absolute w-60 h-60 bg-sky-500 blurr translate-x-60 translate-y-120 right-1/2" />
-      <div className="absolute w-60 h-60 bg-sky-400 blurr translate-x-60 translate-y-80 right-300" />
+      <div className="absolute w-60 h-60 bg-sky-500 blurr  translate-x-1/2 right-1/2 bottom-0" />
+      <div className="absolute w-60 h-10 bg-sky-500 blurr  translate-x-1/2 left-2/3 bottom-0" />
+      <div className="absolute w-60 h-10 bg-sky-400 blurr  translate-x-1/2 bottom-0" />
       <div className="relative h-60 w-full z-[19] mt-8">
         <div className="relative z-20 mx-auto mt-32 mb-2 flex max-w-full flex-col items-center justify-center px-3 md:mt-36 md:max-w-4xl lg:max-w-5xl">
-          {/*   <Link
+          <Link
             className="group flex cursor-pointer items-center rounded-full border border-black/5 bg-neutral-200 text-sm backdrop-blur-xs transition-transform duration-300 ease-in lg:text-base dark:border-white/10 dark:bg-white/5 dark:hover:border-white/20 animate-fadeInDown"
             href="/projects/next-venture"
           >
@@ -37,7 +38,7 @@ export default function Hero() {
                   var(--primary) calc(var(--x) + 20%),
                   transparent calc(var(--x) + 30%),
                   var(--primary) calc(var(--x) + 100%)
-                )`,
+               )`,
                 textShadow: `
                   rgba(255, 255, 255, 0.3) 0px 0px 10px,
                   rgba(255, 255, 255, 0.2) 0px 0px 20px,
@@ -49,7 +50,7 @@ export default function Hero() {
                 transform: "none",
               }}
             >
-              Next Ventures is live!
+              StudBud AI is live!
             </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -66,16 +67,16 @@ export default function Hero() {
             >
               <path d="m9 18 6-6-6-6"></path>
             </svg>
-          </Link> */}
-          <h2 className="animate-fadeInUp my-2 w-full py-px text-center text-4xl leading-snug! font-semibold text-balance text-zinc-700 opacity-90 md:text-5xl lg:text-6xl dark:text-zinc-100">
-            <span className="md:text-nowrap">Macha! Make your</span>
+          </Link>
+          <h2 className="animate-fadeInUp mt-10 w-full py-px text-center text-4xl leading-snug! font-semibold text-balance text-zinc-700 opacity-90 md:text-5xl lg:text-6xl dark:text-zinc-100">
+            <span className="md:text-nowrap">StudBud helps students</span>
             <br className="hidden md:block" />
-            School Life{" "}
+            school life with{" "}
             <span className="font-nyght bg-linear-to-b from-zinc-500 via-zinc-600 to-zinc-900 bg-clip-text font-light tracking-wide text-transparent dark:from-zinc-700 dark:via-zinc-200 dark:to-zinc-50">
-              Easier !!!
+              smart,with AI
             </span>
           </h2>
-          <h1 className="animate-fadeInUp grad-white relative z-20 mt-4 mb-7 flex flex-col items-center justify-center text-center text-xl sm:flex-row md:text-xl lg:mt-7 lg:text-2xl">
+          <h1 className="animate-fadeInUp grad-white relative z-20 mb-7 flex flex-col items-center justify-center text-center text-xl sm:flex-row md:text-xl lg:text-2xl">
             <span className="grad-white flex items-center justify-center">
               A full application
               <div className="group relative z-300">
@@ -115,7 +116,7 @@ export default function Hero() {
             </span>
           </h1>
 
-          <div className="animate-fadeInUp z-100 mt-4 flex flex-col items-center justify-center gap-6 sm:flex-row md:mt-8 md:gap-10">
+          <div className="animate-fadeInUp z-100  flex flex-col items-center justify-center gap-6 sm:flex-row  md:gap-10">
             <button
               className="group relative inline-flex cursor-pointer items-center justify-between overflow-hidden rounded-full border border-black/30 bg-black/20 py-[3px] pr-[3px] pl-2 text-base font-medium opacity-85 backdrop-blur-xs transition-all hover:bg-transparent md:py-1 md:pr-1 md:pl-3 dark:border-white/10 dark:bg-white/10"
               onClick={handleCopy}

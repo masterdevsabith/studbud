@@ -8,7 +8,9 @@ export async function getSubdomain(subdomain: string) {
   const baseUrl = process.env.APP_BASE_URL;
   const domain = sanitizedSubdomain;
   const response = await axios.get(
-    `${baseUrl}/api/v1/getSubdomainList/${domain}`
+    `${
+      process.env.APP_BASE_URL || "https://studbud-backend-server.onrender.com"
+    }/api/v1/getSubdomainList/${domain}`
   );
   return response.data[0]?.subdomain;
 }

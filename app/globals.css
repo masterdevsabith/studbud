@@ -12,6 +12,15 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@font-face {
+  font-family: nyght;
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("/font/NyghtSerif-Dark.woff2") format("woff2")
+}
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #000000;
@@ -60,9 +69,11 @@ body {
 .blur {
   filter: blur(500px);
 }
+
 .blurr {
   filter: blur(180px);
 }
+
 .blurrr {
   filter: blur(260px);
 }
@@ -72,9 +83,12 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* .custom-scrollbar::-webkit-scrollbar {
@@ -102,19 +116,22 @@ body {
   padding: 8px;
   border-radius: 8px;
 }
-.react-calendar__navigation {
-}
-.react-calendar__month-view__days {
-}
+
+.react-calendar__navigation {}
+
+.react-calendar__month-view__days {}
+
 .react-calendar__tile {
   position: relative;
   display: flex;
   flex-direction: column-reverse;
   margin: 2px;
 }
+
 .react-calendar__tile--active {
   border-radius: 8px;
 }
+
 .react-calendar__tile--now {
   border-radius: 8px;
   background-color: rgb(193, 193, 193);

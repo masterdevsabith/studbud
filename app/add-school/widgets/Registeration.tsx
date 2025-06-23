@@ -31,7 +31,10 @@ export default function RegisterSchool() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${baseUrl}/api/v1/create/newSubdomain`,
+        `${
+          process.env.APP_BASE_URL ||
+          "https://studbud-backend-server.onrender.com"
+        }/api/v1/create/newSubdomain`,
         formData
       );
       if (response.status === 200) {
