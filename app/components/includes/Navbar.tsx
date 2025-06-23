@@ -1,40 +1,16 @@
-"use client";
-
-import Link from "next/link";
-
-export default function Navbar() {
+export default function NavBar() {
   return (
-    <nav className="w-full flex items-center justify-between px-10 py-4 fixed bg-gray-800/50 backdrop-blur-2xl z-50">
-      <div className="text-lg font-bold text-white">LOGO.</div>
-
-      <div className="hidden md:flex space-x-8 text-gray-500 font-medium">
-        <Link href="#" className="text-sky-500">
-          Home
-        </Link>
-        <Link href="#" className="hover:text-sky-500">
-          About
-        </Link>
-        <Link href="#" className="hover:text-sky-500">
-          Membership
-        </Link>
-        <Link href="#" className="hover:text-sky-500">
-          Donate
-        </Link>
-      </div>
-
-      <div className="flex items-center space-x-4">
-        {/* <Link
-          href="#"
-          className="text-sm font-medium text-gray-700 hover:underline"
-        >
-          <button className="text-[1rem]">Sign Up</button>
-        </Link> */}
-        <Link href="/add-school">
-          <button className="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-10 py-2 rounded-md shadow-sm transition cursor-pointer">
-            Add your school
-          </button>
-        </Link>
-      </div>
-    </nav>
+    <header className="fixed z-50 px-6 py-3 mt-10 rounded-3xl right-1/2 transform translate-x-1/2 bg-white/5 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-0 border border-neutral-700">
+      <nav className="flex items-center justify-center">
+        <ul className="flex gap-10 text-neutral-400">
+          <li>Home</li>
+          <li>About</li>
+          <li>Work</li>
+          <li>Blog</li>
+          <li>More</li>
+          <li>Book a call</li>
+        </ul>
+      </nav>
+    </header>
   );
 }
