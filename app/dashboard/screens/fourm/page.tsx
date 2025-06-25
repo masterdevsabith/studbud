@@ -12,7 +12,7 @@ export default function Homework() {
         <Forum />
       </div>
       <div className="w-1/5 bg-gray-50 overflow-y-hidden">
-        <Task />
+        {/* <Task /> */}
       </div>
     </main>
   );

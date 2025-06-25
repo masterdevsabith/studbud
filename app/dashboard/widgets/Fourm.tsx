@@ -9,7 +9,8 @@ export default function FourmScreen() {
   const [activeTab, setActiveTab] = useState("Discussions");
   const tabs = ["Announcement", "Discussions", "Files"];
   const [classname, setClassname] = useState();
-  const [post, setPost] = useState<any>(null);
+  const [announcement, setAnnouncement] = useState<any>();
+  const [discussion, setDiscussion] = useState<any>(null);
 
   useEffect(() => {
     const fetchAnnouncement = async () => {
@@ -27,242 +28,145 @@ export default function FourmScreen() {
             },
           }
         );
-        const fetchedClass = res.data.user.response.classname
-        setClassname(fetchedClass);
+        setClassname(res.data.user.response[0]?.classname);
       } catch (e) {
         console.log(e);
       }
-      const getFourmByClass = await axios.get(
-        `${
-          process.env.APP_BASE_URL ||
-          "https://studbud-backend-server.onrender.com"
-        }/get/fourm/post/${classname}`
-      );
-      setPost(getFourmByClass.data);
     };
 
     fetchAnnouncement();
   }, []);
 
-  console.log(
-    `Hey bro this is classname which you are looking :::=== ${classname}`
-  );
-  const forums = [
-    {
-      id: 1,
-      user: "Sarah M.",
-      timeAgo: "3 hours ago",
-      title: "Help with Math Assignment",
-      message: "Can someone explain quadratic equations?",
-      replies: 5,
-    },
-    {
-      id: 2,
-      user: "Mike T.",
-      timeAgo: "5 hours ago",
-      title: "Study Group for History",
-      message:
-        "Anyone interested in forming a study group for the upcoming history test?",
-      replies: 12,
-    },
-    {
-      id: 3,
-      user: "Ayesha K.",
-      timeAgo: "1 hour ago",
-      title: "Need Help with Chemistry",
-      message:
-        "Struggling with balancing chemical equations. Anyone free to help?",
-      replies: 3,
-    },
-    {
-      id: 4,
-      user: "John D.",
-      timeAgo: "2 hours ago",
-      title: "Group Project Coordination",
-      message: "Let’s finalize the topics for our science project group.",
-      replies: 7,
-    },
-    {
-      id: 5,
-      user: "Lina S.",
-      timeAgo: "30 minutes ago",
-      title: "Biology Revision Tips",
-      message: "What’s the best way to remember scientific terms for the test?",
-      replies: 4,
-    },
-    {
-      id: 6,
-      user: "Ravi P.",
-      timeAgo: "4 hours ago",
-      title: "Doubt in Geography Homework",
-      message: "Can someone explain the water cycle diagram question?",
-      replies: 6,
-    },
-    {
-      id: 7,
-      user: "Emma W.",
-      timeAgo: "6 hours ago",
-      title: "English Essay Help",
-      message:
-        "Struggling with the conclusion part. Can someone give suggestions?",
-      replies: 2,
-    },
-    {
-      id: 8,
-      user: "Khalid Z.",
-      timeAgo: "7 hours ago",
-      title: "Physics Group Formation",
-      message: "Need 2 more people to form a group for the physics experiment.",
-      replies: 9,
-    },
-    {
-      id: 9,
-      user: "Chen L.",
-      timeAgo: "10 minutes ago",
-      title: "Doubt in Computer Science",
-      message: "Can someone explain how recursion works in JS?",
-      replies: 8,
-    },
-  ];
-  const announcements = [
-    {
-      id: 1,
-      user: "Principal Johnson",
-      timeAgo: "2 hours ago",
-      title: "School Holiday Notice",
-      message: "School will be closed next Monday for a public holiday.",
-      likes: 12,
-    },
-    {
-      id: 2,
-      user: "Ms. Clara Bennett",
-      timeAgo: "4 hours ago",
-      title: "Parent-Teacher Meeting",
-      message:
-        "A parent-teacher meeting will be held this Friday at 4 PM in the auditorium.",
-      likes: 9,
-    },
-    {
-      id: 3,
-      user: "Principal Johnson",
-      timeAgo: "1 day ago",
-      title: "Annual Sports Day",
-      message:
-        "Annual Sports Day is scheduled for next Wednesday. All students must wear sports attire.",
-      likes: 21,
-    },
-    {
-      id: 4,
-      user: "Mr. Alan Green",
-      timeAgo: "3 days ago",
-      title: "Science Fair Submissions",
-      message:
-        "Last date to submit science fair projects is this Thursday. Late entries won’t be accepted.",
-      likes: 7,
-    },
-    {
-      id: 5,
-      user: "Ms. Clara Bennett",
-      timeAgo: "5 days ago",
-      title: "Library Book Return",
-      message:
-        "Students must return overdue library books by the end of this week to avoid fines.",
-      likes: 4,
-    },
-  ];
+  useEffect(() => {
+    if (!classname) return;
 
-  useEffect(() => {}, []);
+    const fetchDiscussionAndAnnouncement = async () => {
+      try {
+        const [annRes, disRes] = await Promise.all([
+          axios.get(
+            `${
+              process.env.APP_BASE_URL ||
+              "https://studbud-backend-server.onrender.com"
+            }/api/v1/get/fourm/post/${classname}`
+          ),
+          axios.get(
+            `${
+              process.env.APP_BASE_URL ||
+              "https://studbud-backend-server.onrender.com"
+            }/api/v1/get/announcement/post/${classname}`
+          ),
+        ]);
+        setAnnouncement(annRes.data);
+        setDiscussion(disRes.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchDiscussionAndAnnouncement();
+  }, [classname]);
 
   return (
-    <section className="forum p-6 ">
-      <div className="top w-full flex justify-between items-center mb-4">
-        {activeTab === "Announcement" && (
-          <h2 className="text-2xl font-bold">🌐 Announcements</h2>
-        )}
-        {activeTab === "Discussions" && (
-          <h2 className="text-2xl font-bold">🏫 Class Community</h2>
-        )}
-        {activeTab === "Files" && (
-          <h2 className="text-2xl font-bold">📂 Files</h2>
-        )}
-
+    <section className="forum p-6 max-w-5xl mx-auto">
+      {/* Top Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-semibold tracking-tight">
+          {activeTab === "Announcement" && "📢 Announcements"}
+          {activeTab === "Discussions" && "💬 Class Discussions"}
+          {activeTab === "Files" && "📁 Shared Files"}
+        </h2>
         <Link
-          className="p-2 bg-blue-600 rounded-md text-white font-bold"
           href="#"
+          className="bg-sky-600 hover:bg-sky-700 transition text-white font-semibold px-4 py-2 rounded-md shadow"
         >
           + New Post
         </Link>
       </div>
 
-      <div className="tabs w-full flex items-center justify-between mb-4 bg-gray-200 p-1 rounded-md">
-        {tabs.map((tab, index) => (
-          <Link
-            key={index}
-            href="#"
+      {/* Tabs */}
+      <div className="flex justify-center bg-gray-100 p-1 rounded-lg mb-6">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
             onClick={() => setActiveTab(tab)}
             className={clsx(
-              "w-1/3 text-center p-2 rounded-md transition",
-              activeTab === tab ? "bg-white font-bold" : "bg-gray-200"
+              "w-full py-2 px-4 text-sm font-medium transition rounded-md",
+              activeTab === tab
+                ? "bg-white text-sky-600 shadow-sm"
+                : "text-gray-600 hover:text-sky-500"
             )}
           >
             {tab}
-          </Link>
+          </button>
         ))}
       </div>
 
+      {/* Announcements */}
       {activeTab === "Announcement" && (
-        <div className="announcement_tab mb-4 p-4 rounded-md"></div>
+        <div className="grid gap-4">
+          {announcement?.map((announcements: any) => (
+            <div
+              key={announcements.id}
+              className="bg-white p-5 rounded-xl shadow-sm border hover:shadow-md transition"
+            >
+              <div className="flex justify-between items-center mb-1 text-sm text-gray-500">
+                <span>🧑‍🏫 {announcements.user || "Anonymous"}</span>
+                <span>{new Date(announcements.created_at).toDateString()}</span>
+              </div>
+              <h3 className="text-lg font-semibold mb-1">
+                {announcements.title}
+              </h3>
+              <p className="text-gray-700">{announcements.description}</p>
+            </div>
+          ))}
+        </div>
       )}
 
+      {/* Discussions */}
       {activeTab === "Discussions" && (
-        <div className="forum_posts ">
-          {forums.map((forum) => (
+        <div className="space-y-5">
+          {discussion?.map((discussions: any) => (
             <div
-              key={forum.id}
-              className="single_forum flex items-start justify-start border-1 gap-2 bg-gray-100 mb-4 p-4 rounded-md hover:drop-shadow-lg"
+              key={discussions.id}
+              className="bg-white p-5 rounded-xl shadow-sm border hover:shadow-md transition flex items-start gap-4"
             >
-              <div className="user">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-10"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div className="details">
-                <div className="name_and_timeAgo flex items-center mb-2">
-                  <h3>{forum.user} • </h3>
-                  <span>{forum.timeAgo}</span>
+              <div className="shrink-0">
+                <div className="bg-sky-100 text-sky-600 p-3 rounded-full">
+                  <svg
+                    className="w-6 h-6"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </div>
-                <h2 className="title mb-2 text-xl font-bold">{forum.title}</h2>
-                <p className="message mb-5">{forum.message}</p>
-                <div className="action_buttons flex items-center">
-                  <div className="replies flex items-center gap-2 mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"
-                      />
-                    </svg>
-                    {forum.replies} replies
-                  </div>
-
-                  <Link href="#" className="">
-                    Join Discussion
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center text-gray-500 text-sm mb-1">
+                  <span>{discussions.user || "Anonymous"}</span>
+                  <span className="mx-2">•</span>
+                  <span>
+                    {new Date(discussions.timeAgo).toLocaleDateString()}
+                  </span>
+                </div>
+                <h4 className="text-lg font-semibold text-gray-800 mb-1">
+                  {discussions.title}
+                </h4>
+                <p className="text-gray-600 mb-3">
+                  {discussions.message || "Hi"}
+                </p>
+                <div className="flex items-center text-sm text-sky-600 gap-6">
+                  <span className="flex items-center gap-1">
+                    💬 {discussions.replies || "Hello"} replies
+                  </span>
+                  <Link
+                    href="#"
+                    className="hover:underline text-sky-600 font-medium"
+                  >
+                    Join Discussion →
                   </Link>
                 </div>
               </div>
@@ -271,10 +175,13 @@ export default function FourmScreen() {
         </div>
       )}
 
+      {/* Files */}
       {activeTab === "Files" && (
-        <div className="files_tab mb-4 p-4 bg-gray-100 rounded-md">
-          <h3 className="font-bold text-lg mb-2">Shared Files</h3>
-          <p>No files shared yet.</p>
+        <div className="bg-white p-6 rounded-xl shadow border text-center">
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            📁 Shared Files
+          </h3>
+          <p className="text-gray-500">No files shared yet.</p>
         </div>
       )}
     </section>
