@@ -66,7 +66,7 @@ export default function FourmScreen() {
   }, [classname]);
 
   return (
-    <section className="forum p-6 max-w-5xl mx-auto">
+    <section className="forum p-6 max-w-5xl h-full mx-auto main-dark">
       {/* Top Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-semibold tracking-tight">
@@ -106,13 +106,27 @@ export default function FourmScreen() {
           {announcement?.map((announcements: any) => (
             <div
               key={announcements.id}
-              className="bg-white p-5 rounded-xl shadow-sm border hover:shadow-md transition"
+              className="bg-neutral-50 p-5 rounded-xl shadow-sm border hover:shadow-md transition"
             >
               <div className="flex justify-between items-center mb-1 text-sm text-gray-500">
-                <span>🧑‍🏫 {announcements.user || "Anonymous"}</span>
+                <span className="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  {announcements.user || "Anonymous"}
+                </span>
                 <span>{new Date(announcements.created_at).toDateString()}</span>
               </div>
-              <h3 className="text-lg font-semibold mb-1">
+              <h3 className="text-lg font-semibold mb-1 text-gray-900">
                 {announcements.title}
               </h3>
               <p className="text-gray-700">{announcements.description}</p>
@@ -160,14 +174,44 @@ export default function FourmScreen() {
                 </p>
                 <div className="flex items-center text-sm text-sky-600 gap-6">
                   <span className="flex items-center gap-1">
-                    💬 {discussions.replies || "Hello"} replies
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
+                      />
+                    </svg>
+                    {discussions.replies || "Hello"} replies
                   </span>
-                  <Link
-                    href="#"
-                    className="hover:underline text-sky-600 font-medium"
-                  >
-                    Join Discussion →
-                  </Link>
+                  <span className="flex items-center gap-1">
+                    <Link
+                      href="#"
+                      className="flex items-center gap-2 text-sky-600 font-medium"
+                    >
+                      Join Discussion{" "}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    </Link>
+                  </span>
                 </div>
               </div>
             </div>

@@ -70,7 +70,7 @@ export default function HomeworkScreen() {
     );
   };
   return (
-    <section className="homework w-full p-6">
+    <section className="homework w-full p-6 main-dark">
       <div className="top w-full flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Homeworks</h2>
 

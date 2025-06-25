@@ -53,7 +53,7 @@ export default function Sidebar() {
   };
 
   return (
-    <section className="h-screen bg-gray-50 p-0">
+    <section className="h-screen  very-dark p-0">
       <div>
         <h3 className="flex justify-center pt-6">
           <Image
@@ -74,14 +74,14 @@ export default function Sidebar() {
                   className={`w-full py-3 font-medium flex items-center justify-start px-16  ${
                     isActive
                       ? "bg-gray-200 text-black border-l-6 border-sky-500"
-                      : "bg-gray-100 text-black border-l-6 border-gray-100"
+                      : "slightly-dark text-white "
                   } hover:bg-gray-100 transition-colors duration-300 `}
                   onClick={() => handlePath(tab.path)}
                 >
                   <Icon
                     size={20}
                     className={`mr-5  ${
-                      isActive ? "text-sky-500" : "text-black"
+                      isActive ? "text-sky-500" : "text-white"
                     }`}
                   />
                   {tab.tabName}

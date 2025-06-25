@@ -236,7 +236,7 @@ export default function Learning() {
               <li
                 key={tab.id}
                 onClick={() => setSelected(tab.name)}
-                className={` rounded-2xl inline ${tab.bgColor} px-4 py-2 text-sm font-medium text-gray-70 border-b-2 border-transparent cursor-pointer  select-none`}
+                className={` rounded-2xl inline ${tab.bgColor} px-4 py-2 text-sm font-medium text-black font-bold border-b-2 border-transparent cursor-pointer  select-none`}
               >
                 {tab.name}
               </li>

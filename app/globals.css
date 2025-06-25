@@ -17,9 +17,8 @@
   font-style: normal;
   font-weight: 200 700;
   font-display: swap;
-  src: url("/font/NyghtSerif-Dark.woff2") format("woff2")
+  src: url("/font/NyghtSerif-Dark.woff2") format("woff2");
 }
-
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -115,11 +114,14 @@ body {
 .react-calendar {
   padding: 8px;
   border-radius: 8px;
+  color: rgb(0, 0, 0) !important;
 }
 
-.react-calendar__navigation {}
+.react-calendar__navigation {
+}
 
-.react-calendar__month-view__days {}
+.react-calendar__month-view__days {
+}
 
 .react-calendar__tile {
   position: relative;
@@ -153,4 +155,15 @@ body {
 
 .transform-style-preserve-3d {
   transform-style: preserve-3d;
+}
+
+/*SOME STUPID VARIABLES --THOTTAL KONN KALAYUM*/
+.very-dark {
+  background: #091119;
+}
+.slightly-dark {
+  background: #101d29;
+}
+.main-dark {
+  background: #122533;
 }
