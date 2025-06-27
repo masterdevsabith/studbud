@@ -64,7 +64,7 @@ export default function TeacherAnnouncement() {
         console.log({
           title: form.title,
           description: form.description,
-          classname: Number(form.classname),
+          classname: form.classname,
         });
 
         console.log("Posted successfully:", res.data);
