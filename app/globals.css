@@ -1,8 +1,55 @@
 @import "tailwindcss";
 
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #000000;
+} */
+
+
+
+:root {
+  /* Basic */
+  --background: #ffffff;
+  --foreground: #000000;
+  /* Base Colors */
+  --studbud-background: #313338;
+  --studbud-sidebar: #2b2d31;
+  --studbud-server-list: #1e1f22;
+  --studbud-primary: #5865f2;
+  --studbud-primary-hover: #4752c4;
+
+  --studbudPrimary: "#3ba4f8";
+  --studbudBg: "#1e1f22";
+  --studbudSurface: "#2b2d31";
+  --studbudBorder: "#383a40";
+  --studbudMuted: "#b5bac1";
+  --studbudText: "#ffffff";
+  /* Text Colors */
+  --studbud-header-text: #f2f3f5;
+  --studbud-normal-text: #dbdee1;
+  --studbud-muted-text: #b5bac1;
+
+  /* Border / Divider */
+  --studbud-border: #4f545c;
+
+  /* Buttons / Interactive */
+  --studbud-button-bg: #4e5058;
+  --studbud-button-hover: #5e6169;
+  --studbud-button-active: #3e4047;
+
+  /* Alerts / States */
+  --studbud-success: #43b581;
+  --studbud-danger: #f04747;
+  --studbud-warning: #faa61a;
+  --studbud-info: #00b0f4;
+
+  /* Elevation / Shadow */
+  --studbud-elevation-low: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --studbud-elevation-mid: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --studbud-elevation-high: 0 8px 16px rgba(0, 0, 0, 0.4);
+
+  /* Fonts */
+  --studbud-font: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 @theme inline {
