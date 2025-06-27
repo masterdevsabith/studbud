@@ -74,14 +74,14 @@ export default function CalendarNotes() {
           <p className="mb-4 text-gray-300">No notes for this day.</p>
         )}
         <textarea
-          className="w-full p-2 border rounded bg-white"
+          className="w-full p-2 border rounded slightly-dark text-white"
           rows={4}
           onChange={(e) => setNewNote(e.target.value)}
           value={newNote}
           placeholder={`Add notes for ${formattedDate}...`}
         />
         <button
-          className="mt-2 bg-white text-black px-4 py-1 rounded-md font-bold"
+          className="mt-2 bg-sky-700 text-white px-4 py-1 rounded-md font-bold"
           onClick={handleAddNote}
         >
           + Add Note
