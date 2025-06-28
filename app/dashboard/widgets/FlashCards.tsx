@@ -278,7 +278,7 @@ export default function FlashCards() {
   }, []);
 
   return (
-    <section className="flashcards p-6 main-dark h-full">
+    <section className="flashcards p-6 bg-white text-black h-full">
       {selectedDeck ? (
         <></>
       ) : (
@@ -345,7 +345,7 @@ export default function FlashCards() {
               ) : null
             )}
             <div
-              className="addnewdeck w-1/3 max-w-[30%] hover:scale-105 slightly-dark drop-shadow-md hover:drop-shadow-lg border-dashed border-2 border-gray-300 hover:border-2 hover:border-sky-500 transition-all duration-100z p-4 rounded-md"
+              className="addnewdeck w-1/3 max-w-[30%] hover:scale-105 bg-zinc-100 drop-shadow-md hover:drop-shadow-lg border-dashed border-2 border-gray-300 hover:border-2 hover:border-sky-500 transition-all duration-100z p-4 rounded-md"
               onClick={() => setShowModal(true)}
             >
               <div className="texts flex flex-col items-center justify-center h-full text-center">

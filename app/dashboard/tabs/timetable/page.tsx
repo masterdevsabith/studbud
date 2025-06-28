@@ -1,6 +1,5 @@
-import HomeWork from "../../widgets/HomeWork";
 import Sidebar from "../../widgets/Sidebar";
-import Task from "../../widgets/Task";
+import Timetable from "../../widgets/TimeTable";
 
 export default function Homework() {
   return (
@@ -8,11 +7,8 @@ export default function Homework() {
       <div className="w-1/5 overflow-y-hidden">
         <Sidebar />
       </div>
-      <div className="w-3/5 overflow-y-scroll">
-        <HomeWork />
-      </div>
-      <div className="w-1/5 bg-gray-50 overflow-y-hidden">
-        <Task />
+      <div className="w-full overflow-y-scroll">
+        <Timetable />
       </div>
     </main>
   );

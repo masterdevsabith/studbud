@@ -1,285 +1,223 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Calendar, Clock, Play, CheckCircle } from "lucide-react";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
+import axios from "axios";
 
-export default function HomeworkScreen() {
-  const [homeworks, setHomeworks] = useState([
-    {
-      id: 1,
-      title: "Algebra Chapter 5 Problems",
-      subject: "Mathematics",
-      borderColor: "border-l-red-500",
-      bgColor: "bg-red-100",
-      completedBgColor: "bg-red-50",
-      dueDate: "2025-06-16",
-      isCompleted: true,
-      hasReminder: true,
-    },
-    {
-      id: 2,
-      title: "Essay on Climate Change",
-      subject: "English",
-      borderColor: "border-l-blue-500",
-      bgColor: "bg-blue-100",
-      completedBgColor: "bg-blue-50",
-      dueDate: "2025-06-17",
-      isCompleted: false,
-      hasReminder: false,
-    },
-    {
-      id: 3,
-      title: "Photosynthesis Diagram Labeling",
-      subject: "Biology",
-      borderColor: "border-l-green-500",
-      bgColor: "bg-green-100",
-      completedBgColor: "bg-green-50",
-      dueDate: "2025-06-18",
-      isCompleted: false,
-      hasReminder: true,
-    },
-    {
-      id: 4,
-      title: "Map Practice - Indian Rivers",
-      subject: "Geography",
-      borderColor: "border-l-purple-500",
-      bgColor: "bg-purple-100",
-      completedBgColor: "bg-purple-50",
-      dueDate: "2025-06-19",
-      isCompleted: true,
-      hasReminder: false,
-    },
-    {
-      id: 5,
-      title: "French Vocabulary Revision",
-      subject: "French",
-      borderColor: "border-l-yellow-500",
-      bgColor: "bg-yellow-100",
-      completedBgColor: "bg-yellow-50",
-      dueDate: "2025-06-20",
-      isCompleted: false,
-      hasReminder: true,
-    },
-  ]);
+interface HomeworkItem {
+  hwId: number;
+  title: string;
+  description: string;
+  classname: string;
+  subject: string;
+  duration: string; // in minutes (as string)
+  status: Record<string, "completed" | "notcompleted">;
+}
 
-  const toggleHomeworkCompletion = (id: number) => {
-    setHomeworks((prevHomeworks) =>
-      prevHomeworks.map((hw) =>
-        hw.id === id ? { ...hw, isCompleted: !hw.isCompleted } : hw
-      )
-    );
+export default function Homework() {
+  const [classname, setClassname] = useState<number | null>(null);
+  const [sId, setSId] = useState<string>("");
+  const [homework, setHomework] = useState<HomeworkItem[] | null>(null);
+
+  const [activeHomework, setActiveHomework] = useState<Record<number, boolean>>(
+    {}
+  );
+  const [countdowns, setCountdowns] = useState<Record<number, number>>({});
+
+  // Get student info
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await axios.get(
+          `${
+            process.env.APP_BASE_URL ||
+            "https://studbud-backend-server.onrender.com"
+          }/api/v1/user/authentication/protect/validate`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const user = res.data.user.response[0];
+        setSId(user?.s_id || "");
+        setClassname(user?.classname || null);
+      } catch (e) {
+        console.error("Failed to fetch user info", e);
+      }
+    };
+    getUserInfo();
+  }, []);
+
+  // Fetch homework
+  useEffect(() => {
+    if (!classname) return;
+    const fetchHomework = async () => {
+      try {
+        const res = await axios.get(
+          `${
+            process.env.APP_BASE_URL ||
+            "https://studbud-backend-server.onrender.com"
+          }/api/v1/get/homework/${classname}`
+        );
+        setHomework(res.data);
+      } catch (e) {
+        console.error("Failed to fetch homework", e);
+      }
+    };
+    fetchHomework();
+  }, [classname]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCountdowns((prev) => {
+        const updated = { ...prev };
+        for (const id in updated) {
+          if (updated[id] > 0) {
+            updated[id] -= 1;
+          }
+        }
+        return updated;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const secs = String(seconds % 60).padStart(2, "0");
+    return `${mins}:${secs}`;
   };
+
+  const startHomework = (hwId: number, durationMinutes: string) => {
+    const seconds = parseInt(durationMinutes) * 60;
+    setActiveHomework((prev) => ({ ...prev, [hwId]: true }));
+    setCountdowns((prev) => ({ ...prev, [hwId]: seconds }));
+  };
+
+  const markAsCompleted = async (homeworkId: number, duration: string) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const statusPayload = {
+        s_id: sId,
+        duration: parseInt(duration),
+        startedAt: new Date().toISOString(),
+      };
+
+      await axios.post(
+        `${
+          process.env.APP_BASE_URL ||
+          "https://studbud-backend-server.onrender.com"
+        }/api/v1/update/hwstatus`,
+        {
+          hwId: homeworkId,
+          status: statusPayload,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setHomework(
+        (prev) =>
+          prev?.map((hw) =>
+            hw.hwId === homeworkId
+              ? {
+                  ...hw,
+                  status: {
+                    ...hw.status,
+                    [sId]: "completed",
+                  },
+                }
+              : hw
+          ) || []
+      );
+    } catch (e) {
+      console.error("Failed to update homework status", e);
+    }
+  };
+
   return (
-    <section className="homework w-full p-6 main-dark">
-      <div className="top w-full flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Homeworks</h2>
+    <div className="p-6 min-h-screen bg-white">
+      <h2 className="text-4xl font-bold text-black mb-6">Home Work</h2>
 
-        <Link
-          className="p-2 bg-blue-600 rounded-md text-white font-bold"
-          href="#"
-        >
-          🔃 Filter
-        </Link>
-      </div>
+      {homework && homework.length > 0 ? (
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {homework.map((hw) => {
+            const secondsLeft = countdowns[hw.hwId] || 0;
+            const isRunning = activeHomework[hw.hwId];
+            const isCompleted = hw.status?.some((entry) => entry.s_id === sId);
 
-      <div className="homeworks">
-        {homeworks
-          .filter((homework) => !homework.isCompleted)
-          .map((homework) => (
-            <div
-              key={homework.id}
-              className={`single_homework flex items-center gap-4 p-4 border-l-4 ${
-                homework.isCompleted
-                  ? homework.borderColor.replace(/-\d+$/, "-700")
-                  : homework.borderColor
-              } ${
-                homework.isCompleted
-                  ? homework.completedBgColor
-                  : homework.bgColor
-              } rounded-md mb-4 shadow-sm hover:shadow-md transition-shadow duration-300`}
-            >
-              <div
-                className="tickbox"
-                onClick={() => toggleHomeworkCompletion(homework.id)}
+            return (
+              <Card
+                key={hw.hwId}
+                className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all border border-sky-100"
               >
-                {homework.isCompleted ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                )}
-              </div>
-              <div className="details_and_bell flex items-center justify-between w-full">
-                <div className="details">
-                  <h3
-                    className={`title font-bold text-md ${
-                      homework.isCompleted ? "text-gray-600" : "text-black"
-                    }`}
-                  >
-                    {homework.title}
-                  </h3>
-                  <p className="subject text-gray-600 mb-2">
-                    {homework.subject}
-                  </p>
-                  <div className="due_date flex items-center text-gray-500">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-4 mr-1"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                    <span>Due : {homework.dueDate}</span>
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-1">
+                      {hw.title}
+                    </h3>
+                    <span className="text-sm text-sky-600 font-medium bg-sky-100 px-2 py-1 rounded">
+                      {hw.subject}
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 italic">
+                    #{hw.classname}
                   </div>
                 </div>
-                <div className="notification_bell">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          ))}
-        {homeworks
-          .filter((homework) => homework.isCompleted)
-          .map((homework) => (
-            <div
-              key={homework.id}
-              className={`single_homework flex items-center gap-4 p-4 border-l-4 ${
-                homework.isCompleted
-                  ? homework.borderColor.replace(/-\d+$/, "-700")
-                  : homework.borderColor
-              } ${
-                homework.isCompleted
-                  ? homework.completedBgColor
-                  : homework.bgColor
-              } rounded-md mb-4 shadow-sm hover:shadow-md transition-shadow duration-300`}
-            >
-              <div
-                className="tickbox"
-                onClick={() => toggleHomeworkCompletion(homework.id)}
-              >
-                {homework.isCompleted ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                )}
-              </div>
-              <div className="details_and_bell flex items-center justify-between w-full">
-                <div className="details">
-                  <h3
-                    className={`title font-bold text-md ${
-                      homework.isCompleted ? "text-gray-600" : "text-black"
-                    }`}
-                  >
-                    {homework.title}
-                  </h3>
-                  <p className="subject text-gray-600 mb-2">
-                    {homework.subject}
-                  </p>
-                  <div className="due_date flex items-center text-gray-500">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-4 mr-1"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                    <span>Due : {homework.dueDate}</span>
+
+                <p className="text-gray-700 text-sm mb-4">{hw.description}</p>
+
+                <div className="flex flex-col gap-2 text-sm text-gray-600 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Clock size={16} />
+                    <span>Estimated Duration: {hw.duration} mins</span>
                   </div>
+
+                  {isRunning && !isCompleted && (
+                    <div className="flex items-center gap-2 text-red-600 font-semibold">
+                      <Clock size={16} />
+                      Time Left: {formatTime(secondsLeft)}
+                    </div>
+                  )}
                 </div>
-                <div className="notification_bell">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-6"
+
+                {/* Action Buttons */}
+                {isCompleted ? (
+                  <div className="bg-green-100 text-green-800 px-3 py-2 rounded text-center font-medium flex items-center justify-center gap-2">
+                    <CheckCircle size={20} /> Completed
+                  </div>
+                ) : isRunning ? (
+                  secondsLeft > 0 ? (
+                    <Button
+                      onClick={() => markAsCompleted(hw.hwId, hw.duration)}
+                      className="bg-green-600 hover:bg-green-700 w-full flex items-center justify-center gap-2"
+                    >
+                      <CheckCircle size={18} /> Mark as Read
+                    </Button>
+                  ) : (
+                    <div className="bg-red-100 text-red-800 px-3 py-2 rounded text-center font-medium">
+                      Time Over!
+                    </div>
+                  )
+                ) : (
+                  <Button
+                    onClick={() => startHomework(hw.hwId, hw.duration)}
+                    className="bg-sky-500 hover:bg-sky-600 w-full flex items-center justify-center gap-2"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          ))}
-      </div>
-    </section>
+                    <Play size={18} /> Start
+                  </Button>
+                )}
+              </Card>
+            );
+          })}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500">No homework available.</p>
+      )}
+    </div>
   );
 }

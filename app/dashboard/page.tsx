@@ -6,6 +6,7 @@ import Sidebar from "./widgets/Sidebar";
 import Task from "./widgets/Task";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
+import ProgressSidebar from "./widgets/Progress";
 
 type jwtPayload = {
   exp?: number;
@@ -25,15 +26,16 @@ export default function DashboardPage() {
   });
 
   return (
-    <main className="h-screen flex overflow-y-hidden">
-      <div className="w-1/5">
+    <main className="h-screen flex overflow-hidden scrollbar-hide">
+      <div className="w-70 border-r bg-white">
         <Sidebar />
       </div>
-      <div className="w-3/5">
+      <div className="w-3/5 overflow-y-auto">
         <MainSection />
       </div>
-      <div className="w-1/5 ">
-        <Task />
+
+      <div className="w-84 border-l bg-white">
+        <ProgressSidebar />
       </div>
     </main>
   );

@@ -1,6 +1,5 @@
 import Forum from "../../widgets/Fourm";
 import Sidebar from "../../widgets/Sidebar";
-import Task from "../../widgets/Task";
 
 export default function Homework() {
   return (
@@ -8,11 +7,8 @@ export default function Homework() {
       <div className="w-1/5 overflow-y-hidden">
         <Sidebar />
       </div>
-      <div className="w-3/5 overflow-y-scroll scrollbar-hide">
+      <div className="w-full overflow-y-scroll scrollbar-hide">
         <Forum />
-      </div>
-      <div className="w-1/5 bg-gray-50 overflow-y-hidden">
-        <Task />
       </div>
     </main>
   );

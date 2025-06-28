@@ -1,4 +1,4 @@
-import FlashCards from "../../widgets/FlashCards";
+import HomeWork from "../../widgets/HomeWork";
 import Sidebar from "../../widgets/Sidebar";
 import Task from "../../widgets/Task";
 
@@ -8,11 +8,8 @@ export default function Homework() {
       <div className="w-1/5 overflow-y-hidden">
         <Sidebar />
       </div>
-      <div className="w-3/5 overflow-y-scroll scrollbar-hide">
-        <FlashCards />
-      </div>
-      <div className="w-1/5 bg-gray-50 overflow-y-hidden">
-        <Task />
+      <div className="w-full overflow-y-scroll">
+        <HomeWork />
       </div>
     </main>
   );

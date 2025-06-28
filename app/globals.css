@@ -95,6 +95,11 @@ body {
   animation: auroraMove 10s ease-in-out infinite alternate;
 }
 
+.sidebar::-webkit-scrollbar {
+  width: 0;
+}
+
+
 @keyframes auroraMove {
   0% {
     transform: rotate(45deg) translate(0px, 0px) scale(1);
@@ -164,11 +169,9 @@ body {
   color: rgb(0, 0, 0) !important;
 }
 
-.react-calendar__navigation {
-}
+.react-calendar__navigation {}
 
-.react-calendar__month-view__days {
-}
+.react-calendar__month-view__days {}
 
 .react-calendar__tile {
   position: relative;
@@ -208,9 +211,11 @@ body {
 .very-dark {
   background: #091119;
 }
+
 .slightly-dark {
   background: #101d29;
 }
+
 .main-dark {
   background: #122533;
 }
