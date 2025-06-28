@@ -5,8 +5,6 @@
   --foreground: #000000;
 } */
 
-
-
 :root {
   /* Basic */
   --background: #ffffff;
@@ -49,7 +47,8 @@
   --studbud-elevation-high: 0 8px 16px rgba(0, 0, 0, 0.4);
 
   /* Fonts */
-  --studbud-font: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --studbud-font: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
 }
 
 @theme inline {

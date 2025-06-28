@@ -34,12 +34,12 @@ export default function TeachersDashboard() {
     },
     {
       tabName: "Homework",
-      path: "/dashboard/screens/homework",
+      path: "/management/teachersdashboard/tabs/homework",
       icon: BookOpenText,
     },
     {
       tabName: "Exam & Tests",
-      path: "/dashboard/home",
+      path: "/management/teachersdashboard/tabs/examandtests",
       icon: BookCheck,
     },
   ];
