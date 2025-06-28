@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CalendarDays,
   Clock,
@@ -17,7 +17,10 @@ export default function TeacherExam() {
   const [step, setStep] = useState(1);
 
   const [questionType, setQuestionType] = useState("normal"); // "normal" or "mcq"
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState({
+    normalQuestions: {},
+    multiplechoice: {},
+  });
 
   // Normal
   const [normalQuestion, setNormalQuestion] = useState("");
@@ -38,10 +41,14 @@ export default function TeacherExam() {
 
   const addNormalQuestion = () => {
     if (normalQuestion.trim()) {
-      setQuestions([
-        ...questions,
-        { type: "normal", question: normalQuestion.trim() },
-      ]);
+      const qCount = Object.keys(questions.normalQuestions).length + 1;
+      setQuestions((prev) => ({
+        ...prev,
+        normalQuestions: {
+          ...prev.normalQuestions,
+          [`question${qCount}`]: normalQuestion.trim(),
+        },
+      }));
       setNormalQuestion("");
     }
   };
@@ -52,15 +59,21 @@ export default function TeacherExam() {
       correctIndex !== null &&
       options.every((o) => o.trim())
     ) {
-      setQuestions([
-        ...questions,
-        {
-          type: "mcq",
-          question: mcqQuestion.trim(),
-          options: [...options],
-          correctIndex,
+      const qCount = Object.keys(questions.multiplechoice).length + 1;
+      setQuestions((prev) => ({
+        ...prev,
+        multiplechoice: {
+          ...prev.multiplechoice,
+          [`question${qCount + 4}`]: {
+            question: mcqQuestion.trim(),
+            choice1: options[0],
+            choice2: options[1],
+            choice3: options[2],
+            choice4: options[3],
+            correct: `choice${correctIndex + 1}`,
+          },
         },
-      ]);
+      }));
       setMcqQuestion("");
       setOptions(["", "", "", ""]);
       setCorrectIndex(null);
@@ -74,7 +87,10 @@ export default function TeacherExam() {
     };
     setQuizData([...quizData, newTest]);
     // Reset form
-    setQuestions([]);
+    setQuestions({
+      normalQuestions: {},
+      multiplechoice: {},
+    }); // fixed reset here
     setTestMeta({
       title: "",
       class: "",
@@ -85,6 +101,10 @@ export default function TeacherExam() {
     setStep(1);
     setIsCreatingTest(false);
   };
+
+  useEffect(() => {
+    console.log("Quiz Data:", quizData);
+  }, [quizData]);
 
   return (
     <section className="w-4/5 h-screen bg-gray-100 p-6 overflow-y-scroll">
@@ -128,7 +148,10 @@ export default function TeacherExam() {
                 Duration: <span className="font-medium">{quiz.duration}</span>
               </div>
               <div className="text-sm text-gray-500 mt-1">
-                {quiz.quesans.length} questions
+                {/* total questions count */}
+                {Object.keys(quiz.quesans.normalQuestions).length +
+                  Object.keys(quiz.quesans.multiplechoice).length}{" "}
+                questions
               </div>
             </div>
           ))}
@@ -221,38 +244,73 @@ export default function TeacherExam() {
                 </div>
               )}
 
-              {questions.length > 0 && (
+              {/* UPDATED CONDITION: Check questions existence properly */}
+              {(Object.keys(questions.normalQuestions).length > 0 ||
+                Object.keys(questions.multiplechoice).length > 0) && (
                 <div className="mt-6">
                   <h4 className="font-semibold mb-2">Questions Added:</h4>
                   <ul className="space-y-2">
-                    {questions.map((q, i) => (
-                      <li
-                        key={i}
-                        className="text-sm border p-2 rounded bg-gray-50"
-                      >
-                        {q.type === "normal" ? (
-                          <span>📝 {q.question}</span>
-                        ) : (
-                          <div>
-                            <p>🔢 {q.question}</p>
-                            <ul className="list-disc list-inside ml-4 text-xs">
-                              {q.options.map((o, idx) => (
-                                <li
-                                  key={idx}
-                                  className={
-                                    q.correctIndex === idx
-                                      ? "font-bold text-green-600"
-                                      : ""
-                                  }
-                                >
-                                  {o}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </li>
-                    ))}
+                    {/* Render normal questions */}
+                    {Object.entries(questions.normalQuestions).map(
+                      ([key, value]) => (
+                        <li
+                          key={key}
+                          className="text-sm border p-2 rounded bg-gray-50"
+                        >
+                          <span>📝 {value}</span>
+                        </li>
+                      )
+                    )}
+
+                    {/* Render multiple choice questions */}
+                    {Object.entries(questions.multiplechoice).map(
+                      ([key, data]) => (
+                        <li
+                          key={key}
+                          className="text-sm border p-2 rounded bg-gray-50"
+                        >
+                          <p>🔢 {data.question}</p>
+                          <ul className="ml-4 list-disc text-xs">
+                            <li
+                              className={
+                                data.correct === "choice1"
+                                  ? "font-bold text-green-600"
+                                  : ""
+                              }
+                            >
+                              {data.choice1}
+                            </li>
+                            <li
+                              className={
+                                data.correct === "choice2"
+                                  ? "font-bold text-green-600"
+                                  : ""
+                              }
+                            >
+                              {data.choice2}
+                            </li>
+                            <li
+                              className={
+                                data.correct === "choice3"
+                                  ? "font-bold text-green-600"
+                                  : ""
+                              }
+                            >
+                              {data.choice3}
+                            </li>
+                            <li
+                              className={
+                                data.correct === "choice4"
+                                  ? "font-bold text-green-600"
+                                  : ""
+                              }
+                            >
+                              {data.choice4}
+                            </li>
+                          </ul>
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
               )}
