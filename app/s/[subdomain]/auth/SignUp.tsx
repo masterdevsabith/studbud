@@ -14,7 +14,25 @@ export default function SignUp() {
     classname: "",
   });
 
+  const [subdomain, setSubdomain] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      const parts = hostname.split(".");
+      if (hostname.includes("localhost")) {
+        // optionally get subdomain from pathname for localhost dev
+        const localParts = window.location.pathname.split("/");
+        const maybeSub = localParts.includes("s")
+          ? localParts[localParts.indexOf("s") + 1]
+          : null;
+        setSubdomain(maybeSub || null);
+      } else if (parts.length >= 3) {
+        setSubdomain(parts[0]); // subdomain.domain.com
+      }
+    }
+  }, []);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -22,16 +40,6 @@ export default function SignUp() {
       ...prev,
       [name]: value,
     }));
-  };
-
-  const getSubdomain = (): string | null => {
-    if (typeof window === "undefined") return null;
-    const hostname = window.location.hostname;
-    const parts = hostname.split(".");
-    // Handle localhost or custom dev domain
-    if (hostname.includes("localhost")) return null;
-    if (parts.length >= 3) return parts[0]; // subdomain.domain.com → subdomain
-    return null;
   };
 
   const handleSignup = async (e: any) => {
@@ -45,12 +53,10 @@ export default function SignUp() {
         formData
       );
 
-      const subdomain = getSubdomain();
       if (subdomain) {
         router.push(`/s/${subdomain}/auth/login`);
       } else {
-        // fallback if subdomain not found
-        router.push("/auth/login");
+        router.push(`/auth/login`);
       }
     } catch (error) {
       console.error("Signup failed", error);
@@ -64,6 +70,7 @@ export default function SignUp() {
           Create Account ✨
         </h1>
         <form onSubmit={handleSignup} className="space-y-6">
+          {/* Full Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Full Name
@@ -81,6 +88,7 @@ export default function SignUp() {
             </div>
           </div>
 
+          {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email
@@ -98,6 +106,7 @@ export default function SignUp() {
             </div>
           </div>
 
+          {/* Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
@@ -115,6 +124,7 @@ export default function SignUp() {
             </div>
           </div>
 
+          {/* Class */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Class (Number)
@@ -132,6 +142,7 @@ export default function SignUp() {
             </div>
           </div>
 
+          {/* Submit */}
           <button
             type="submit"
             className="w-full bg-sky-500 hover:bg-sky-600 text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-md"
@@ -139,10 +150,11 @@ export default function SignUp() {
             Sign Up
           </button>
 
+          {/* Login link */}
           <p className="text-center text-sm text-gray-600">
             Already have an account?{" "}
             <Link
-              href="/auth/login"
+              href={subdomain ? `/s/${subdomain}/auth/login` : "/auth/login"}
               className="text-sky-500 font-medium hover:underline"
             >
               Login here
