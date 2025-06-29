@@ -1,16 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  CalendarDays,
-  Clock,
-  FileText,
-  GraduationCap,
-  Eye,
-  Pencil,
-  MoreHorizontal,
-} from "lucide-react";
-
 export default function TeacherExam() {
   const [quizData, setQuizData] = useState([]);
   const [isCreatingTest, setIsCreatingTest] = useState(false);
@@ -111,7 +101,7 @@ export default function TeacherExam() {
       <div className="top flex items-center justify-between mb-6">
         <div className="left">
           <h2 className="text-2xl font-black text-black">Tests & Exams</h2>
-          <p className="text-gray-600">
+          <p className="text-neutral-900">
             Create and manage your tests and examinations
           </p>
         </div>
@@ -135,16 +125,16 @@ export default function TeacherExam() {
               <h2 className="text-lg font-semibold text-gray-800">
                 {quiz.title}
               </h2>
-              <div className="text-sm text-gray-600 mt-1">
+              <div className="text-sm text-neutral-900 mt-1">
                 Subject: <span className="font-medium">{quiz.subject}</span>
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-neutral-900">
                 Class: <span className="font-medium">{quiz.class}</span>
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-neutral-900">
                 Time: <span className="font-medium">{quiz.time}</span>
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-neutral-900">
                 Duration: <span className="font-medium">{quiz.duration}</span>
               </div>
               <div className="text-sm text-gray-500 mt-1">
@@ -159,7 +149,7 @@ export default function TeacherExam() {
       )}
 
       {isCreatingTest && (
-        <div className="form bg-white p-6 rounded-lg shadow-md space-y-4">
+        <div className="form bg-white text-neutral-900 p-6 rounded-lg shadow-md space-y-4">
           {step === 1 && (
             <>
               <h3 className="text-xl font-semibold mb-2">Add Questions</h3>

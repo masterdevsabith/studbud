@@ -1,8 +1,6 @@
 "use client";
 
-import { section } from "motion/react-client";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import {
   HomeIcon,
   MessagesSquare,
@@ -10,80 +8,130 @@ import {
   BookCheck,
   Layers,
   LogOutIcon,
+  CalendarCheck2,
+  ClipboardList,
+  BarChart,
+  Settings,
+  Box,
+  User,
+  ZoomOut,
+  Video,
 } from "lucide-react";
 
 export interface Tabs {
   tabName: string;
   path: string;
-  icon: string;
+  icon: any;
+  section?: string;
 }
 
-export default function TeachersDashboard() {
-  const [isActive, setIsactive] = useState();
+export default function Sidebar() {
   const pathname = usePathname();
+
   const tabs: Tabs[] = [
     {
       tabName: "Dashboard",
-      path: "/management/teachersdashboard/",
+      path: "/dashboard",
       icon: HomeIcon,
+      section: "Main",
     },
     {
       tabName: "Announcement",
-      path: "/management/teachersdashboard/tabs/announcement",
+      path: "/dashboard/tabs/fourm",
       icon: MessagesSquare,
     },
     {
       tabName: "Homework",
-      path: "/management/teachersdashboard/tabs/homework",
+      path: "/dashboard/tabs/homework",
       icon: BookOpenText,
     },
     {
       tabName: "Exam & Tests",
       path: "/management/teachersdashboard/tabs/examandtests",
       icon: BookCheck,
+      section: "Academic",
+    },
+    {
+      tabName: "Timetable",
+      path: "/dashboard/tabs/timetable",
+      icon: CalendarCheck2,
+    },
+    {
+      tabName: "Attendance",
+      path: "/management/teachersdashboard/tabs/attendance",
+      icon: ClipboardList,
+    },
+
+    {
+      tabName: "Meeting",
+      path: "/management/teachersdashboard/tabs/meeting",
+      icon: Video,
     },
   ];
 
-  const handlePath = (path: any) => {
+  const handlePath = (path: string) => {
     window.open(path, "_self");
   };
 
+  const groupedTabs = tabs.reduce((acc: Record<string, Tabs[]>, tab) => {
+    const group = tab.section || "Other";
+    acc[group] = acc[group] || [];
+    acc[group].push(tab);
+    return acc;
+  }, {});
+
   return (
-    <section className="h-screen w-1/5 bg-gray-50 p-3 flex flex-col ">
-      <div className="top border-b-1 border-gray-500 mb-6">
-        <h2 className="text-2xl text-gray-900 font-black mb-4">fundaDash</h2>
+    <section className="h-screen pl-2 sidebar bg-white border-r shadow-sm flex flex-col justify-between">
+      {/* Header */}
+      <div className="py-6 border-b mb-6">
+        <h2 className="text-4xl font-bold text-sky-600 tracking-tight text-center">
+          StudBud .Tr
+        </h2>
       </div>
-      <div className="mid">
-        {tabs.map((tab, index) => {
-          const isActive =
-            pathname === tab.path || pathname === tab.path.replace(/\/$/, "");
-          const Icon = tab.icon;
-          return (
-            <div key={index} className="flex items-center justify-start">
-              <button
-                className={`w-full py-3 font-medium flex items-center justify-start px-4  ${
-                  isActive
-                    ? "bg-gray-200 text-black border-l-6 border-sky-500"
-                    : " text-black "
-                } hover:bg-gray-100 transition-colors duration-300 `}
-                onClick={() => handlePath(tab.path)}
-              >
-                <Icon
-                  size={20}
-                  className={`mr-5  ${
-                    isActive ? "text-sky-500" : "text-indigo-700"
+
+      {/* Tabs */}
+      <div className="flex-1 overflow-auto">
+        {Object.entries(groupedTabs).map(([section, groupTabs], i) => (
+          <div key={i} className="mb-4">
+            <h3 className="text-gray-500 text-xs uppercase px-6 mb-2 font-semibold tracking-wider">
+              {section}
+            </h3>
+            {groupTabs.map((tab, index) => {
+              const isActive =
+                pathname === tab.path ||
+                pathname === tab.path.replace(/\/$/, "");
+              const Icon = tab.icon;
+
+              return (
+                <button
+                  key={index}
+                  onClick={() => handlePath(tab.path)}
+                  className={`w-full mb-1 flex items-center gap-3 px-6 py-3 text-sm font-medium transition-all rounded-xl ${
+                    isActive
+                      ? "bg-sky-100 text-sky-700"
+                      : "text-gray-700 hover:bg-sky-200"
                   }`}
-                />
-                {tab.tabName}
-              </button>
-            </div>
-          );
-        })}
+                >
+                  <Icon
+                    size={18}
+                    className={`${isActive ? "text-sky-500" : "text-gray-500"}`}
+                  />
+                  {tab.tabName}
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </div>
-      <div className="bottom border-t-1 border-gray-500 ">
-        <button className="text-black flex items-center justify-center py-3 px-4">
-          <LogOutIcon />
-          Logout
+
+      {/* Logout */}
+      <div className="border-t p-6">
+        <button
+          className="flex items-center gap-3 text-gray-600 hover:text-red-500 transition"
+          onClick={() => alert("Logging out...")}
+        >
+          <LogOutIcon size={18} />
+          <span className="text-sm font-medium">Logout</span>
         </button>
       </div>
     </section>
