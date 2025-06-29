@@ -10,6 +10,8 @@ import {
   Pencil,
   MoreHorizontal,
 } from "lucide-react";
+import axios from "axios";
+import QuizCard from "../widgets/QuizCard";
 
 export default function TeacherExam() {
   const [quizData, setQuizData] = useState([]);
@@ -80,31 +82,59 @@ export default function TeacherExam() {
     }
   };
 
-  const handlePostTest = () => {
-    const newTest = {
-      ...testMeta,
-      quesans: questions,
-    };
-    setQuizData([...quizData, newTest]);
-    // Reset form
-    setQuestions({
-      normalQuestions: {},
-      multiplechoice: {},
-    }); // fixed reset here
-    setTestMeta({
-      title: "",
-      class: "",
-      subject: "",
-      duration: "",
-      time: "10:00 AM",
-    });
-    setStep(1);
-    setIsCreatingTest(false);
+  const fetchExamData = async (setQuizData: Function) => {
+    try {
+      const res = await axios.get(
+        "https://studbud-backend-server.onrender.com/api/v1/get/exam/12"
+      );
+      setQuizData(res.data);
+    } catch (error) {
+      console.error("Error fetching exams:", error);
+    }
   };
 
   useEffect(() => {
-    console.log("Quiz Data:", quizData);
-  }, [quizData]);
+    fetchExamData(setQuizData);
+  }, []);
+
+  const handlePostTest = async () => {
+    const payload = {
+      title: testMeta.title,
+      classname: parseInt(testMeta.class),
+      subject: testMeta.subject,
+      duration: testMeta.duration,
+      question: questions,
+    };
+
+    try {
+      console.log("Posting this test to server:", payload);
+
+      const response = await axios.post(
+        "https://studbud-backend-server.onrender.com/api/v1/create/exam/post",
+        payload
+      );
+      console.log("Success:", response.data);
+
+      // Reset form
+      setQuizData([...quizData, payload]);
+      setQuestions({
+        normalQuestions: {},
+        multiplechoice: {},
+      });
+      setTestMeta({
+        title: "",
+        class: "",
+        subject: "",
+        duration: "",
+        time: "10:00 AM",
+      });
+      setStep(1);
+      setIsCreatingTest(false);
+    } catch (error) {
+      console.error("Error posting test:", error);
+      alert("Failed to post test. Please try again.");
+    }
+  };
 
   return (
     <section className="w-4/5 h-screen bg-gray-100 p-6 overflow-y-scroll">
@@ -128,32 +158,7 @@ export default function TeacherExam() {
       {!isCreatingTest && (
         <div className="bottom p-4 space-y-4">
           {quizData.map((quiz, index) => (
-            <div
-              key={index}
-              className="border rounded-lg p-4 shadow-sm bg-white"
-            >
-              <h2 className="text-lg font-semibold text-gray-800">
-                {quiz.title}
-              </h2>
-              <div className="text-sm text-gray-600 mt-1">
-                Subject: <span className="font-medium">{quiz.subject}</span>
-              </div>
-              <div className="text-sm text-gray-600">
-                Class: <span className="font-medium">{quiz.class}</span>
-              </div>
-              <div className="text-sm text-gray-600">
-                Time: <span className="font-medium">{quiz.time}</span>
-              </div>
-              <div className="text-sm text-gray-600">
-                Duration: <span className="font-medium">{quiz.duration}</span>
-              </div>
-              <div className="text-sm text-gray-500 mt-1">
-                {/* total questions count */}
-                {Object.keys(quiz.quesans.normalQuestions).length +
-                  Object.keys(quiz.quesans.multiplechoice).length}{" "}
-                questions
-              </div>
-            </div>
+            <QuizCard key={index} quiz={quiz} />
           ))}
         </div>
       )}
@@ -162,7 +167,12 @@ export default function TeacherExam() {
         <div className="form bg-white p-6 rounded-lg shadow-md space-y-4">
           {step === 1 && (
             <>
-              <h3 className="text-xl font-semibold mb-2">Add Questions</h3>
+              <h3 className="text-xl font-semibold mb-2 text-gray-950">
+                Add Questions
+              </h3>
+              <span className="italic text-gray-400 mb-2">
+                select the type of question you want
+              </span>
 
               <div className="flex gap-3 mb-4">
                 <button
@@ -170,7 +180,7 @@ export default function TeacherExam() {
                   className={`px-4 py-2 rounded ${
                     questionType === "normal"
                       ? "bg-blue-600 text-white"
-                      : "bg-gray-200"
+                      : "bg-neutral-400"
                   }`}
                 >
                   Normal Question
@@ -180,7 +190,7 @@ export default function TeacherExam() {
                   className={`px-4 py-2 rounded ${
                     questionType === "mcq"
                       ? "bg-blue-600 text-white"
-                      : "bg-gray-200"
+                      : "bg-neutral-400"
                   }`}
                 >
                   Multiple Choice Question
@@ -248,16 +258,18 @@ export default function TeacherExam() {
               {(Object.keys(questions.normalQuestions).length > 0 ||
                 Object.keys(questions.multiplechoice).length > 0) && (
                 <div className="mt-6">
-                  <h4 className="font-semibold mb-2">Questions Added:</h4>
+                  <h4 className="font-semibold mb-2 text-gray-500">
+                    Questions Added:
+                  </h4>
                   <ul className="space-y-2">
                     {/* Render normal questions */}
                     {Object.entries(questions.normalQuestions).map(
                       ([key, value]) => (
                         <li
                           key={key}
-                          className="text-sm border p-2 rounded bg-gray-50"
+                          className="text-sm border-2 border-gray-400 p-2 rounded bg-gray-200/50"
                         >
-                          <span>📝 {value}</span>
+                          <span className="text-gray-400">📝 {value}</span>
                         </li>
                       )
                     )}
@@ -267,15 +279,15 @@ export default function TeacherExam() {
                       ([key, data]) => (
                         <li
                           key={key}
-                          className="text-sm border p-2 rounded bg-gray-50"
+                          className="text-sm border-2 border-gray-400 p-2 rounded bg-gray-200/50"
                         >
-                          <p>🔢 {data.question}</p>
-                          <ul className="ml-4 list-disc text-xs">
+                          <p className="text-gray-500">🔢 {data.question}</p>
+                          <ul className="ml-4 list-decimal text-xs">
                             <li
                               className={
                                 data.correct === "choice1"
                                   ? "font-bold text-green-600"
-                                  : ""
+                                  : "text-gray-400"
                               }
                             >
                               {data.choice1}
@@ -284,7 +296,7 @@ export default function TeacherExam() {
                               className={
                                 data.correct === "choice2"
                                   ? "font-bold text-green-600"
-                                  : ""
+                                  : "text-gray-400"
                               }
                             >
                               {data.choice2}
@@ -293,7 +305,7 @@ export default function TeacherExam() {
                               className={
                                 data.correct === "choice3"
                                   ? "font-bold text-green-600"
-                                  : ""
+                                  : "text-gray-400"
                               }
                             >
                               {data.choice3}
@@ -302,7 +314,7 @@ export default function TeacherExam() {
                               className={
                                 data.correct === "choice4"
                                   ? "font-bold text-green-600"
-                                  : ""
+                                  : "text-gray-400"
                               }
                             >
                               {data.choice4}
@@ -326,7 +338,9 @@ export default function TeacherExam() {
 
           {step === 2 && (
             <>
-              <h3 className="text-xl font-semibold mb-4">Test Details</h3>
+              <h3 className="text-xl font-semibold mb-4 text-sky-700">
+                Test Details
+              </h3>
               <div className="space-y-3">
                 <input
                   type="text"
