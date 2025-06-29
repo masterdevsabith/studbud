@@ -13,6 +13,9 @@ import {
   GraduationCap,
   BookOpen,
   Hourglass,
+  ShieldAlert,
+  EyeOff,
+  Clock,
 } from "lucide-react";
 
 interface ExamData {
@@ -211,6 +214,33 @@ export default function ExamPage() {
   return (
     <div className="min-h-screen bg-gray-100 py-6 px-4 md:px-10 flex gap-6">
       <div className="flex-1 bg-white rounded-xl shadow-lg p-6 space-y-6">
+        <div className="bg-yellow-50 border border-yellow-300 p-4 rounded-md text-sm text-yellow-900 space-y-2">
+          <div className="flex items-center gap-2">
+            <ShieldAlert className="w-6 h-6 text-red-500" />{" "}
+            <span className="text-2xl text-red-500">
+              Please read the exam rules carefully:
+            </span>
+          </div>
+          <ul className="list-disc list-inside space-y-1">
+            <li className="flex items-center gap-2">
+              <EyeOff className="w-4 h-4 text-yellow-700" /> Do not switch tabs
+              during the exam.
+            </li>
+            <li className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-yellow-700" /> Your session is
+              limited to {examData.duration} minutes only.
+            </li>
+            <li className="flex items-center gap-2">
+              <TimerReset className="w-4 h-4 text-yellow-700" /> Your timer
+              starts as soon as the exam loads.
+            </li>
+            <li className="flex items-center gap-2">
+              <Send className="w-4 h-4 text-yellow-700" /> The exam will be
+              auto-submitted when time runs out.
+            </li>
+          </ul>
+        </div>
+
         <div className="flex justify-between items-center border-b pb-3">
           <div>
             <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
