@@ -72,7 +72,7 @@ export default function FourmScreen() {
   const discussionlink = `/dashboard/screens/fourm/f/${discussion?.[0]?.disid}`;
   console.log(discussionlink);
   return (
-    <section className="p-6 h-screen mx-auto bg-white text-black">
+    <section className="p-6 h-screen mx-auto bg-white text-black overflow-y-scroll">
       <div className="flex justify-between items-center mb-6 ">
         <h2 className="text-3xl font-semibold tracking-tight flex items-center gap-2 ">
           {activeTab === "Announcement" && (

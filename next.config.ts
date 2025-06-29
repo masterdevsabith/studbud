@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "img.youtube.com",
+        hostname: "i.ytimg.com",
         pathname: "/**",
         port: "",
       },

@@ -7,11 +7,17 @@ import {
   Pencil,
   MoreHorizontal,
 } from "lucide-react";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function QuizCard({ quiz }) {
   const totalQuestions =
     Object.keys(quiz.question?.normalQuestions || {}).length +
     Object.keys(quiz.question?.multiplechoice || {}).length;
+
+  useEffect(() => {
+    console.log(quiz);
+  });
 
   return (
     <div className="flex justify-between items-center p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition">
@@ -57,10 +63,14 @@ export default function QuizCard({ quiz }) {
 
       {/* Actions */}
       <div className="flex items-center gap-2 text-gray-900">
-        <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-sm font-medium flex items-center gap-1">
-          <Eye className="w-4 h-4" />
-          View
-        </button>
+        <Link
+          href={`/management/teachersdashboard/tabs/examandtests/e&t/${quiz.examId}`}
+        >
+          <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-sm font-medium flex items-center gap-1">
+            <Eye className="w-4 h-4" />
+            View
+          </button>
+        </Link>
         <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-sm font-medium flex items-center gap-1">
           <Pencil className="w-4 h-4" />
           Edit

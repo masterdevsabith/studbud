@@ -53,10 +53,7 @@ export default function ExamAndTestsView() {
     console.log("Sending payload to server:", payload);
 
     try {
-      await axios.post(
-        "https://studbud-backend-server.onrender.com/api/v1/updatemark",
-        payload
-      );
+      await axios.post("http://localhost:8080/api/v1/updatemark", payload);
       alert("✅ Mark submitted successfully!");
     } catch (error) {
       console.error(

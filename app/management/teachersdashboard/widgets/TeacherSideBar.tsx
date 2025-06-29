@@ -31,18 +31,18 @@ export default function Sidebar() {
   const tabs: Tabs[] = [
     {
       tabName: "Dashboard",
-      path: "/dashboard",
+      path: "/management/teachersdashboard",
       icon: HomeIcon,
       section: "Main",
     },
     {
       tabName: "Announcement",
-      path: "/dashboard/tabs/fourm",
+      path: "/management/teachersdashboard/tabs/announcement",
       icon: MessagesSquare,
     },
     {
       tabName: "Homework",
-      path: "/dashboard/tabs/homework",
+      path: "/management/teachersdashboard/tabs/homework",
       icon: BookOpenText,
     },
     {
@@ -50,11 +50,6 @@ export default function Sidebar() {
       path: "/management/teachersdashboard/tabs/examandtests",
       icon: BookCheck,
       section: "Academic",
-    },
-    {
-      tabName: "Timetable",
-      path: "/dashboard/tabs/timetable",
-      icon: CalendarCheck2,
     },
     {
       tabName: "Attendance",

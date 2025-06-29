@@ -3,7 +3,7 @@ export default function MainSection() {
     <section className="w-4/5 h-screen bg-gray-100 p-6">
       <div className="top flex items-center justify-between">
         <div className="left">
-          <h2 className="text-2xl font-black text-black">Welcome Funda</h2>
+          <h2 className="text-2xl font-black text-black">Welcome Sabith</h2>
           <p className="text-gray-600">
             Welcome back! Here's what's happening today.
           </p>
@@ -19,7 +19,7 @@ export default function MainSection() {
         <div className="grid grid-cols-4 gap-4">
           <div className="bg-white p-4 rounded-xl shadow-sm">
             <p className="text-gray-500 text-sm">Total Students</p>
-            <h2 className="text-3xl font-bold text-black">248</h2>
+            <h2 className="text-3xl font-bold text-black">6</h2>
             <p className="text-green-500 text-xs mt-1">↑ 12% from last month</p>
           </div>
           <div className="bg-white p-4 rounded-xl shadow-sm">
