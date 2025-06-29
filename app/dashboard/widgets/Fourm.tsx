@@ -14,7 +14,7 @@ import {
 
 export default function FourmScreen() {
   const [activeTab, setActiveTab] = useState("Discussions");
-  const tabs = ["Announcement", "Discussions", "Files"];
+  const tabs = ["Announcement", "Discussions"];
   const [classname, setClassname] = useState();
   const [announcement, setAnnouncement] = useState<any>();
   const [discussion, setDiscussion] = useState<any>(null);
@@ -72,19 +72,9 @@ export default function FourmScreen() {
   const discussionlink = `/dashboard/screens/fourm/f/${discussion?.[0]?.disid}`;
   console.log(discussionlink);
   return (
-    <section
-      className="p-6 max-w-5xl mx-auto"
-      style={{
-        backgroundColor: "var(--studbud-background)",
-        color: "var(--studbud-text)",
-        fontFamily: "var(--studbud-font)",
-      }}
-    >
-      <div className="flex justify-between items-center mb-6">
-        <h2
-          className="text-3xl font-semibold tracking-tight flex items-center gap-2"
-          style={{ color: "var(--studbud-text-header)" }}
-        >
+    <section className="p-6 h-screen mx-auto bg-white text-black">
+      <div className="flex justify-between items-center mb-6 ">
+        <h2 className="text-3xl font-semibold tracking-tight flex items-center gap-2 ">
           {activeTab === "Announcement" && (
             <>
               <Megaphone className="w-6 h-6" color="var(--studbud-primary)" />
@@ -110,36 +100,22 @@ export default function FourmScreen() {
         <Link
           href="#"
           className="transition font-semibold px-4 py-2 rounded-md shadow"
-          style={{
-            backgroundColor: "var(--studbud-primary)",
-            color: "#fff",
-          }}
         >
           + New Post
         </Link>
       </div>
 
-      <div
-        className="flex justify-center p-1 rounded-lg mb-6"
-        style={{ backgroundColor: "var(--studbud-sidebar)" }}
-      >
+      <div className="flex gap-2 justify-center p-1 rounded-lg mb-6 shadow-md">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={clsx(
-              "w-full py-2 px-4 text-sm font-medium transition rounded-md"
+              "w-full py-2 px-4 text-sm font-medium transition rounded-md",
+              activeTab === tab
+                ? "bg-sky-200 text-sky-800 shadow-sm"
+                : "bg-neutral-200 text-gray-500 hover:bg-sky-100"
             )}
-            style={{
-              backgroundColor:
-                activeTab === tab ? "var(--studbud-surface)" : "transparent",
-              color:
-                activeTab === tab
-                  ? "var(--studbud-primary)"
-                  : "var(--studbud-text-muted)",
-              boxShadow:
-                activeTab === tab ? "0 1px 2px rgba(0,0,0,0.2)" : "none",
-            }}
           >
             {tab}
           </button>
@@ -149,14 +125,7 @@ export default function FourmScreen() {
       {activeTab === "Announcement" && (
         <div className="grid gap-4">
           {announcement?.map((ann: any) => (
-            <div
-              key={ann.id}
-              className="p-5 rounded-xl border transition"
-              style={{
-                backgroundColor: "var(--studbud-surface)",
-                borderColor: "var(--studbud-border)",
-              }}
-            >
+            <div key={ann.id} className="p-5 rounded-xl border transition ">
               <div
                 className="flex justify-between items-center mb-1 text-sm"
                 style={{ color: "var(--studbud-text-muted)" }}
