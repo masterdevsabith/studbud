@@ -129,7 +129,7 @@ export default function TeacherAnnouncement() {
             <input
               type="text"
               required
-              className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm"
+              className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm"
               placeholder="Enter announcement title"
               value={form.title}
               onChange={(e) =>
@@ -145,7 +145,7 @@ export default function TeacherAnnouncement() {
             <textarea
               required
               rows={4}
-              className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm resize-none"
+              className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm resize-none"
               placeholder="Enter announcement description"
               value={form.description}
               onChange={(e) =>
@@ -161,7 +161,7 @@ export default function TeacherAnnouncement() {
             <input
               required
               type="number"
-              className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm"
+              className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm"
               placeholder="Eg: 9 or 10"
               value={form.classname}
               onChange={(e) =>
