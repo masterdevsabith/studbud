@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Bot, UserCheck, Clock10, XCircle } from "lucide-react";
+import Link from "next/link";
 
 interface Student {
   s_id: string;
@@ -163,17 +164,20 @@ export default function StudyBuddy() {
       </h1>
 
       {/* AI Buddy Section */}
-      <div className="bg-sky-100 p-6 rounded-2xl shadow-lg mb-10 max-w-4xl mx-auto flex items-center space-x-4">
-        <Bot className="w-10 h-10 text-sky-700" />
-        <div>
-          <h2 className="text-xl font-semibold text-sky-800">
-            Meet your AI StudyBuddy!
-          </h2>
-          <p className="text-gray-700 text-sm">
-            Ask questions, get help, or study smarter with AI!
-          </p>
+      <Link href="/dashboard/tabs/studybuddy/ai">
+        {" "}
+        <div className="bg-sky-100 p-6 rounded-2xl shadow-lg mb-10 max-w-4xl mx-auto flex items-center space-x-4">
+          <Bot className="w-10 h-10 text-sky-700" />
+          <div>
+            <h2 className="text-xl font-semibold text-sky-800">
+              Meet your AI StudyBuddy!
+            </h2>
+            <p className="text-gray-700 text-sm">
+              Ask questions, get help, or study smarter with AI!
+            </p>
+          </div>
         </div>
-      </div>
+      </Link>
 
       {loading ? (
         <p className="text-center text-gray-600">Loading...</p>
