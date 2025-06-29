@@ -1,54 +1,150 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Trophy, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 
-const leaderboardData = [
-  {
-    rank: 1,
-    name: "Alex Chen",
-    points: 2847,
-    avatar: "👑",
-    bgColor: "bg-yellow-400",
-    textColor: "text-yellow-900",
-  },
-  {
-    rank: 2,
-    name: "Sarah Miller",
-    points: 2693,
-    avatar: "🥈",
-    bgColor: "bg-gray-300",
-    textColor: "text-gray-900",
-  },
-  {
-    rank: 3,
-    name: "John Doe",
-    points: 2581,
-    avatar: "🥉",
-    bgColor: "bg-orange-400",
-    textColor: "text-cyan-800",
-  },
-  {
-    rank: 4,
-    name: "Emma Wilson",
-    points: 2367,
-    avatar: "EW",
-    bgColor: "bg-blue-100",
-    textColor: "text-blue-800",
-  },
-  {
-    rank: 5,
-    name: "Mike Johnson",
-    points: 2198,
-    avatar: "MJ",
-    bgColor: "bg-purple-100",
-    textColor: "text-purple-800",
-  },
-];
+const app_base_url =
+  process.env.APP_BASE_URL || "https://studbud-backend-server.onrender.com";
+
+type LeaderboardEntry = {
+  userId: string;
+  count: number;
+  rank: number;
+  name: string;
+  avatar: string;
+  bgColor: string;
+  textColor: string;
+};
+
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+}
+
+function getRandomColors(index: number) {
+  const bgColors = [
+    "bg-blue-100",
+    "bg-purple-100",
+    "bg-green-100",
+    "bg-pink-100",
+    "bg-yellow-100",
+    "bg-orange-100",
+  ];
+  const textColors = [
+    "text-blue-800",
+    "text-purple-800",
+    "text-green-800",
+    "text-pink-800",
+    "text-yellow-800",
+    "text-orange-800",
+  ];
+  return {
+    bgColor: bgColors[index % bgColors.length],
+    textColor: textColors[index % textColors.length],
+  };
+}
 
 export default function Leaderboard() {
-  const [second, first, third] = leaderboardData.slice(0, 3);
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>(
+    []
+  );
+  const [classname, setClassname] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Step 1: Get classname from token
+  useEffect(() => {
+    async function fetchClassname() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await axios.get(
+          `${app_base_url}/api/v1/user/authentication/protect/validate`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const cls = String(res.data.user.response[0]?.classname);
+        console.log("✅ Classname fetched:", cls);
+        if (cls) setClassname(cls);
+        else throw new Error("Classname not found");
+      } catch (err) {
+        console.error("❌ Failed to fetch classname:", err);
+        setLoading(false);
+      }
+    }
+
+    fetchClassname();
+  }, []);
+
+  // Step 2: When classname is set, fetch leaderboard
+  useEffect(() => {
+    if (!classname) return;
+
+    async function fetchLeaderboard() {
+      try {
+        const { data: rawLeaderboard } = await axios.get(
+          `${app_base_url}/api/v1/get/leaderboard/${classname}`
+        );
+
+        const enriched = await Promise.all(
+          rawLeaderboard.map(async (entry: any, idx: number) => {
+            try {
+              const res = await axios.get(
+                `${app_base_url}/api/v1/get/userById/${entry.userId}`
+              );
+              const name = res.data?.username || "anonymous";
+              const { bgColor, textColor } = getRandomColors(idx);
+              return {
+                userId: entry.userId,
+                count: entry.count,
+                rank: entry.rank,
+                name,
+                avatar: getInitials(name),
+                bgColor,
+                textColor,
+              };
+            } catch {
+              return {
+                userId: entry.userId,
+                count: entry.count,
+                rank: entry.rank,
+                name: "anonymous",
+                avatar: "AN",
+                bgColor: "bg-gray-300",
+                textColor: "text-gray-800",
+              };
+            }
+          })
+        );
+
+        setLeaderboardData(enriched);
+      } catch (err) {
+        console.error("❌ Failed to fetch leaderboard:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchLeaderboard();
+  }, [classname]);
+
+  if (loading)
+    return <p className="p-4 text-sm text-gray-500">Loading leaderboard...</p>;
+  if (!leaderboardData.length)
+    return (
+      <p className="p-4 text-sm text-gray-500">No leaderboard data found.</p>
+    );
+
+  const [second, first, third, ...rest] = leaderboardData;
 
   return (
     <aside className="h-screen sticky top-0 w-full">
@@ -59,43 +155,50 @@ export default function Leaderboard() {
               <Trophy size={25} />
               <span>Leaderboard</span>
             </CardTitle>
-            <button className="text-teal-800 hover:text-cyan-800 text-sm font-medium">
-              View All
-            </button>
           </div>
         </CardHeader>
 
         <CardContent className="space-y-6 overflow-y-auto h-[calc(100vh-90px)]">
           <div className="flex justify-center items-end gap-4">
-            <div className="flex flex-col items-center relative top-4">
-              <div className="w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-xl bg-gray-300 text-black shadow-lg">
-                {second.avatar}
+            {second && (
+              <div className="flex flex-col items-center relative top-4">
+                <div
+                  className={`w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-xl shadow-lg ${second.bgColor} ${second.textColor}`}
+                >
+                  {second.avatar}
+                </div>
+                <p className="text-sm mt-1">{second.name.split(" ")[0]}</p>
+                <p className="text-xs text-cyan-800/70">{second.count} pts</p>
               </div>
-              <p className="text-sm mt-1">{second.name.split(" ")[0]}</p>
-              <p className="text-xs text-cyan-800/70">{second.points} pts</p>
-            </div>
+            )}
 
-            <div className="flex flex-col items-center z-10">
-              <div className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center text-2xl bg-yellow-400 text-yellow-900 shadow-xl">
-                {first.avatar}
+            {first && (
+              <div className="flex flex-col items-center z-10">
+                <div className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center text-2xl bg-yellow-400 text-yellow-900 shadow-xl">
+                  🏆
+                </div>
+                <p className="text-base font-semibold mt-2">
+                  {first.name.split(" ")[0]}
+                </p>
+                <p className="text-xs text-cyan-800/70">{first.count} pts</p>
               </div>
-              <p className="text-base font-semibold mt-2">
-                {first.name.split(" ")[0]}
-              </p>
-              <p className="text-xs text-cyan-800/70">{first.points} pts</p>
-            </div>
+            )}
 
-            <div className="flex flex-col items-center relative top-4">
-              <div className="w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-xl bg-orange-400 text-cyan-800 shadow-lg">
-                {third.avatar}
+            {third && (
+              <div className="flex flex-col items-center relative top-4">
+                <div
+                  className={`w-14 h-14 rounded-full border-4 border-white flex items-center justify-center text-xl shadow-lg ${third.bgColor} ${third.textColor}`}
+                >
+                  {third.avatar}
+                </div>
+                <p className="text-sm mt-1">{third.name.split(" ")[0]}</p>
+                <p className="text-xs text-cyan-800/70">{third.count} pts</p>
               </div>
-              <p className="text-sm mt-1">{third.name.split(" ")[0]}</p>
-              <p className="text-xs text-cyan-800/70">{third.points} pts</p>
-            </div>
+            )}
           </div>
 
           <div className="space-y-3 pt-10">
-            {leaderboardData.slice(3).map((user) => (
+            {rest.map((user) => (
               <div
                 key={user.rank}
                 className="flex items-center gap-3 bg-white/10 rounded-lg p-3"
@@ -115,7 +218,7 @@ export default function Leaderboard() {
                     {user.name}
                   </p>
                   <p className="text-xs text-cyan-800/70">
-                    {user.points} points
+                    {user.count} points
                   </p>
                 </div>
                 <Star size={16} className="text-yellow-300" />
