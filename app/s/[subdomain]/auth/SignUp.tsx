@@ -1,5 +1,6 @@
 "use client";
-import { User, Lock } from "lucide-react";
+
+import { User, Lock, Mail, BookOpen } from "lucide-react";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -13,10 +14,14 @@ type jwtPayload = {
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
+    class: "",
   });
+
   const router = useRouter();
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -25,13 +30,13 @@ export default function SignUp() {
     }));
   };
 
-  const handleLogin = async (e: any) => {
+  const handleSignup = async (e: any) => {
     e.preventDefault();
     const { data } = await axios.post(
       `${
         process.env.APP_BASE_URL ||
         "https://studbud-backend-server.onrender.com"
-      }/api/v1/user/loginUser`,
+      }/api/v1/user/createUser`,
       formData
     );
 
@@ -54,57 +59,97 @@ export default function SignUp() {
         console.log(e);
       }
     }
-  });
+  }, []);
+
   return (
-    <section className="min-h-dvh flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Sign Up
+    <section className="min-h-dvh bg-white flex items-center justify-center p-6">
+      <div className="w-full max-w-md bg-white p-8 rounded-3xl shadow-2xl border border-gray-100">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
+          Create Account ✨
         </h1>
-        <form className="space-y-4">
+        <form onSubmit={handleSignup} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Your Name
+              Full Name
             </label>
-            <div className="flex items-center border rounded-xl px-3 py-2 focus-within:ring-2 ring-sky-500">
-              <User className="w-5 h-5 text-gray-400 mr-2" />
+            <div className="flex items-center border rounded-xl px-3 py-3 bg-gray-50 focus-within:ring-2 ring-sky-500">
+              <User className="w-5 h-5 text-gray-400 mr-3" />
               <input
                 type="text"
-                name="email"
-                value={formData.email}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
-                placeholder="Enter your name"
-                className="w-full bg-transparent outline-none"
+                placeholder="Your name"
+                className="w-full bg-transparent outline-none text-gray-800"
               />
             </div>
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
+            <div className="flex items-center border rounded-xl px-3 py-3 bg-gray-50 focus-within:ring-2 ring-sky-500">
+              <Mail className="w-5 h-5 text-gray-400 mr-3" />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email address"
+                className="w-full bg-transparent outline-none text-gray-800"
+              />
+            </div>
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
             </label>
-            <div className="flex items-center border rounded-xl px-3 py-2 focus-within:ring-2 ring-sky-500">
-              <Lock className="w-5 h-5 text-gray-400 mr-2" />
+            <div className="flex items-center border rounded-xl px-3 py-3 bg-gray-50 focus-within:ring-2 ring-sky-500">
+              <Lock className="w-5 h-5 text-gray-400 mr-3" />
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Enter password"
-                className="w-full bg-transparent outline-none"
+                placeholder="Create a password"
+                className="w-full bg-transparent outline-none text-gray-800"
               />
             </div>
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Class (Number)
+            </label>
+            <div className="flex items-center border rounded-xl px-3 py-3 bg-gray-50 focus-within:ring-2 ring-sky-500">
+              <BookOpen className="w-5 h-5 text-gray-400 mr-3" />
+              <input
+                type="number"
+                name="class"
+                value={formData.class}
+                onChange={handleChange}
+                placeholder="Eg: 10"
+                className="w-full bg-transparent outline-none text-gray-800"
+              />
+            </div>
+          </div>
+
           <button
             type="submit"
-            onClick={handleLogin}
-            className="w-full bg-sky-500 hover:bg-sky-600 text-white py-3 rounded-xl font-semibold transition-all duration-300"
+            className="w-full bg-sky-500 hover:bg-sky-600 text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-md"
           >
             Sign Up
           </button>
-          <p className="text-center">
-            Dont&apos;t have an accounts{" "}
-            <Link href="/auth/login" className="text-sky-500">
-              login
+
+          <p className="text-center text-sm text-gray-600">
+            Already have an account?{" "}
+            <Link
+              href="/auth/login"
+              className="text-sky-500 font-medium hover:underline"
+            >
+              Login here
             </Link>
           </p>
         </form>

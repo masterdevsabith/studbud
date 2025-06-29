@@ -51,11 +51,11 @@ export default function Sidebar() {
       icon: BookCheck,
       section: "Academic",
     },
-    {
-      tabName: "Timetable",
-      path: "/dashboard/tabs/timetable",
-      icon: CalendarCheck2,
-    },
+    // {
+    //   tabName: "Timetable",
+    //   path: "/dashboard/tabs/timetable",
+    //   icon: CalendarCheck2,
+    // },
     {
       tabName: "Attendance",
       path: "/dashboard/tabs/attendance",
@@ -64,12 +64,12 @@ export default function Sidebar() {
     { tabName: "Flashcards", path: "/dashboard/tabs/flashcard", icon: Box },
     { tabName: "Study Buddy", path: "/dashboard/tabs/studybuddy", icon: User },
     { tabName: "Meeting", path: "/dashboard/tabs/meet", icon: Video },
-    {
-      tabName: "Settings",
-      path: "/dashboard/settings",
-      icon: Settings,
-      section: "System",
-    },
+    // {
+    //   tabName: "Settings",
+    //   path: "/dashboard/settings",
+    //   icon: Settings,
+    //   section: "System",
+    // },
   ];
 
   const handlePath = (path: string) => {
