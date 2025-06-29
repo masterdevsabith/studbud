@@ -47,7 +47,7 @@ export default function Sidebar() {
     },
     {
       tabName: "Exam & Tests",
-      path: "/dashboard/home",
+      path: "/dashboard/tabs/exam",
       icon: BookCheck,
       section: "Academic",
     },
