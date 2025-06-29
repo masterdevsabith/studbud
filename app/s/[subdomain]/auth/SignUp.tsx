@@ -4,20 +4,14 @@ import { User, Lock, Mail, BookOpen } from "lucide-react";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
-
-type jwtPayload = {
-  exp?: number;
-  [key: string]: any;
-};
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    class: "",
+    classname: "",
   });
 
   const router = useRouter();
@@ -30,36 +24,38 @@ export default function SignUp() {
     }));
   };
 
-  const handleSignup = async (e: any) => {
-    e.preventDefault();
-    const { data } = await axios.post(
-      `${
-        process.env.APP_BASE_URL ||
-        "https://studbud-backend-server.onrender.com"
-      }/api/v1/user/createUser`,
-      formData
-    );
-
-    const token = data.token;
-    localStorage.setItem("token", token);
-    if (token) {
-      router.push("/dashboard");
-    }
+  const getSubdomain = (): string | null => {
+    if (typeof window === "undefined") return null;
+    const hostname = window.location.hostname;
+    const parts = hostname.split(".");
+    // Handle localhost or custom dev domain
+    if (hostname.includes("localhost")) return null;
+    if (parts.length >= 3) return parts[0]; // subdomain.domain.com → subdomain
+    return null;
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const { exp } = jwtDecode<jwtPayload>(token);
-        if (exp && Date.now() / 1000 < exp) {
-          router.push("/dashboard");
-        }
-      } catch (e) {
-        console.log(e);
+  const handleSignup = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${
+          process.env.APP_BASE_URL ||
+          "https://studbud-backend-server.onrender.com"
+        }/api/v1/user/createUser`,
+        formData
+      );
+
+      const subdomain = getSubdomain();
+      if (subdomain) {
+        router.push(`/s/${subdomain}/auth/login`);
+      } else {
+        // fallback if subdomain not found
+        router.push("/auth/login");
       }
+    } catch (error) {
+      console.error("Signup failed", error);
     }
-  }, []);
+  };
 
   return (
     <section className="min-h-dvh bg-white flex items-center justify-center p-6">
@@ -127,8 +123,8 @@ export default function SignUp() {
               <BookOpen className="w-5 h-5 text-gray-400 mr-3" />
               <input
                 type="number"
-                name="class"
-                value={formData.class}
+                name="classname"
+                value={formData.classname}
                 onChange={handleChange}
                 placeholder="Eg: 10"
                 className="w-full bg-transparent outline-none text-gray-800"
