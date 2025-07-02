@@ -106,10 +106,13 @@ const CreateMeeting: React.FC = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:8080/api/v1/create/meet", {
-        classname: className.trim(),
-        meetingData: meeting,
-      });
+      const res = await axios.post(
+        " https://studbud-backend-server.onrender.com/api/v1/create/meet",
+        {
+          classname: className.trim(),
+          meetingData: meeting,
+        }
+      );
 
       if (res.data.success) {
         alert("Meeting created successfully!");

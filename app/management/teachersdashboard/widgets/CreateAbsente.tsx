@@ -31,7 +31,7 @@ export default function AttendanceMarkPage() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/userByclass/${selectedClass}`
+          `https://studbud-backend-server.onrender.com/api/v1/userByclass/${selectedClass}`
         );
         console.log("Fetched students:", res.data[0]); // DEBUG
         setStudents([res.data[0]]);
@@ -65,12 +65,15 @@ export default function AttendanceMarkPage() {
 
     try {
       const promises = Array.from(absentees).map((s_id) =>
-        axios.post("http://localhost:8080/api/v1/markabsentees", {
-          s_id,
-          newDaysByMonth: {
-            [currentMonthKey]: [currentDay],
-          },
-        })
+        axios.post(
+          "https://studbud-backend-server.onrender.com/api/v1/markabsentees",
+          {
+            s_id,
+            newDaysByMonth: {
+              [currentMonthKey]: [currentDay],
+            },
+          }
+        )
       );
 
       await Promise.all(promises);
