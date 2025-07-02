@@ -88,7 +88,7 @@ export default function AttendanceMarkPage() {
   };
 
   return (
-    <section className="p-6 h-screen bg-white w-full text-neutral-800">
+    <section className="p-6 h-screen bg-white w-full sm:ml-18 lg:ml-0 text-neutral-800">
       <h1 className="text-3xl font-bold mb-6 text-sky-700">Mark Absentees</h1>
 
       <div className="mb-6 max-w-sm">

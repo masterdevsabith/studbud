@@ -68,7 +68,7 @@ export default function TeacherHomework() {
   }, [submit]);
 
   return (
-    <section className="w-4/5 h-screen bg-gray-100 p-6 overflow-y-scroll">
+    <section className="w-full h-screen bg-gray-100 p-6 sm:ml-18 lg:ml-0 overflow-y-scroll">
       <div className="top flex items-center justify-between mb-6">
         <div className="left">
           <h2 className="text-2xl font-black text-black">Homework</h2>

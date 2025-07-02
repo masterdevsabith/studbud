@@ -144,7 +144,7 @@ const CreateMeeting: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-white p-6 text-black overflow-auto">
+    <div className="w-full h-screen bg-white p-6 sm:ml-18 lg:ml-0 text-black overflow-auto">
       <h2 className="text-3xl font-bold mb-6 text-center">Create Meeting</h2>
       <form onSubmit={handleSubmit} className="space-y-5 max-w-xl mx-auto">
         <div>
