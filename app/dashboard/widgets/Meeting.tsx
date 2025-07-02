@@ -75,13 +75,18 @@ export default function Meeting() {
   useEffect(() => {
     const fetchMeetings = async () => {
       if (!classname) return;
-
       try {
+        const hostname = window.location.hostname;
+
+        const parts = hostname.split(".");
+
+        const subdomain = parts[0];
+
         const res = await axios.get(
           `${
             process.env.APP_BASE_URL ||
             "https://studbud-backend-server.onrender.com"
-          }/api/v1/get/meetdata/${classname}`
+          }/api/v1/get/meetdata/${classname}/${subdomain}`
         );
         setMeetings(res.data || []);
       } catch (err) {

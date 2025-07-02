@@ -77,7 +77,7 @@ export default function Learning() {
           query
         )}&hl=en&gl=US`,
         headers: {
-          "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY as string,
+          // "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY as string,
           "x-rapidapi-host": "youtube138.p.rapidapi.com",
         },
       };

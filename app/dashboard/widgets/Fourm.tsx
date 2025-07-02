@@ -45,18 +45,24 @@ export default function FourmScreen() {
     if (!classname) return;
     const fetchPosts = async () => {
       try {
+        const hostname = window.location.hostname;
+
+        const parts = hostname.split(".");
+
+        const subdomain = parts[0];
+
         const [annRes, disRes] = await Promise.all([
           axios.get(
             `${
               process.env.APP_BASE_URL ||
               "https://studbud-backend-server.onrender.com"
-            }/api/v1/get/announcement/post/${classname}`
+            }/api/v1/get/announcement/post/${classname}/${subdomain}`
           ),
           axios.get(
             `${
               process.env.APP_BASE_URL ||
               "https://studbud-backend-server.onrender.com"
-            }/api/v1/get/fourm/post/${classname}`
+            }/api/v1/get/fourm/post/${classname}/${subdomain}`
           ),
         ]);
         setAnnouncement(annRes.data || []);
@@ -72,6 +78,11 @@ export default function FourmScreen() {
     if (!newTitle || !newDescription) return;
     setLoading(true);
     try {
+      const hostname = window.location.hostname;
+
+      const parts = hostname.split(".");
+
+      const subdomain = parts[0];
       await axios.post(
         `${
           process.env.APP_BASE_URL ||
@@ -81,6 +92,7 @@ export default function FourmScreen() {
           title: newTitle,
           description: newDescription,
           classname,
+          subdomain,
         }
       );
       setNewTitle("");
@@ -90,7 +102,7 @@ export default function FourmScreen() {
         `${
           process.env.APP_BASE_URL ||
           "https://studbud-backend-server.onrender.com"
-        }/api/v1/get/fourm/post/${classname}`
+        }/api/v1/get/fourm/post/${classname}/${subdomain}`
       );
       setDiscussion(disRes.data || []);
     } catch (err) {

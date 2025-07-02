@@ -8,7 +8,7 @@ interface Props {
 }
 
 const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
-const baseUrl = process.env.APP_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default async function JoinLink({ params }: Props) {
   const { school } = params;

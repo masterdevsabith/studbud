@@ -48,7 +48,7 @@ export default function RegisterSchool() {
   };
 
   return (
-    <section className="min-h-screen w-full flex flex-col md:flex-row">
+    <section className="min-h-screen bg-white text-black w-full flex flex-col md:flex-row">
       <div className="md:w-1/2 w-full flex items-center justify-center p-8 md:p-20">
         <div className="max-w-md w-full space-y-6">
           <div>

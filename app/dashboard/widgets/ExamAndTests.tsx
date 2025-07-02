@@ -10,25 +10,69 @@ import {
   GraduationCap,
   PlayCircle,
 } from "lucide-react";
+import { SubFinder } from "@/app/utils/Subdomainfinder";
 
 export default function ExamAndTests() {
   const [exams, setExams] = useState([]);
-
-  // 🔁 Fetch function (defined outside useEffect)
-  const fetchExams = async () => {
-    try {
-      const res = await axios.get(
-        "https://studbud-backend-server.onrender.com/api/v1/get/exam/12"
-      );
-      setExams(res.data);
-    } catch (error) {
-      console.error("Error fetching exams:", error);
-    }
-  };
+  const [classname, setClassname] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchExams();
+    const validateToken = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("No token found. Please login.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await axios.get(
+          `${
+            process.env.APP_BASE_URL ||
+            "https://studbud-backend-server.onrender.com"
+          }/api/v1/user/authentication/protect/validate`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        const cls = res.data?.user?.response?.[0]?.classname;
+        if (!cls) throw new Error("Classname not found");
+        setClassname(cls);
+      } catch (err) {
+        console.error("Validation error:", err);
+        setError("User validation failed.");
+        setLoading(false);
+      }
+    };
+
+    validateToken();
   }, []);
+
+  useEffect(() => {
+    if (!classname) return;
+
+    const fetchExams = async () => {
+      try {
+        const hostname = window.location.hostname;
+
+        const parts = hostname.split(".");
+
+        const subdomain = parts[0];
+        
+        const res = await axios.get(
+          `https://studbud-backend-server.onrender.com/api/v1/get/exam/${classname}/${subdomain}`
+        );
+        setExams(res.data);
+      } catch (error) {
+        console.error("Error fetching exams:", error);
+      }
+    };
+
+    fetchExams();
+  }, [classname]);
 
   return (
     <section className="p-6 bg-gray-100 min-h-screen">
