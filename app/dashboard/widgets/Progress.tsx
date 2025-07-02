@@ -147,7 +147,7 @@ export default function Leaderboard() {
   const [second, first, third, ...rest] = leaderboardData;
 
   return (
-    <aside className="h-screen sticky top-0 w-full">
+    <aside className="h-screen sticky top-0 w-full lg:hidden sm:hidden">
       <Card className="bg-gradient-to-br from-cyan-50 to-white text-cyan-800 h-full rounded-none border-none">
         <CardHeader className="pb-20">
           <div className="flex items-center justify-between">

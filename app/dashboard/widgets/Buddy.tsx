@@ -158,7 +158,7 @@ export default function StudyBuddy() {
     outStatuses.find((r) => r.req_id === req_id)?.status?.trim();
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-sky-50 to-white p-6">
+    <section className="min-h-screen bg-gradient-to-br from-sky-50 to-white p-6 sm:ml-18 lg:ml-0">
       <h1 className="text-center text-4xl font-bold text-sky-700 mb-10">
         StudyBuddy Zone
       </h1>

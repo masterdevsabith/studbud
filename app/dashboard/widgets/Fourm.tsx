@@ -113,7 +113,7 @@ export default function FourmScreen() {
   };
 
   return (
-    <section className="p-6 h-screen overflow-y-auto bg-white text-black">
+    <section className="p-6 h-screen overflow-y-auto bg-white text-black sm:ml-18 lg:ml-0">
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-semibold tracking-tight flex items-center gap-2">

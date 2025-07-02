@@ -61,7 +61,7 @@ export default function ExamAndTests() {
         const parts = hostname.split(".");
 
         const subdomain = parts[0];
-        
+
         const res = await axios.get(
           `https://studbud-backend-server.onrender.com/api/v1/get/exam/${classname}/${subdomain}`
         );
@@ -75,7 +75,7 @@ export default function ExamAndTests() {
   }, [classname]);
 
   return (
-    <section className="p-6 bg-gray-100 min-h-screen">
+    <section className="p-6 bg-gray-100 min-h-screen sm:ml-18 lg:ml-0">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">
         All Exams & Tests
       </h2>

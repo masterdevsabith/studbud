@@ -101,7 +101,7 @@ export default function Meeting() {
   }, [classname]);
 
   return (
-    <section className="w-full h-screen bg-white overflow-y-auto px-6 py-10 text-neutral-900">
+    <section className="w-full h-screen bg-white overflow-y-auto px-6 py-10 text-neutral-900 sm:ml-18 lg:ml-0">
       <h1 className="text-3xl font-bold text-sky-700 mb-8 text-left flex gap-2">
         <Video className="w-8 h-8" /> Your Zoom Meetings
       </h1>

@@ -38,6 +38,7 @@ export default function Homework() {
           }/api/v1/user/authentication/protect/validate`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
+
         const user = res.data.user.response[0];
         setSId(user?.s_id || "");
         setClassname(user?.classname || null);
@@ -53,11 +54,16 @@ export default function Homework() {
     if (!classname) return;
     const fetchHomework = async () => {
       try {
+        const hostname = window.location.hostname;
+
+        const parts = hostname.split(".");
+
+        const subdomain = parts[0];
         const res = await axios.get(
           `${
             process.env.APP_BASE_URL ||
             "https://studbud-backend-server.onrender.com"
-          }/api/v1/get/homework/${classname}`
+          }/api/v1/get/homework/${classname}/${subdomain}`
         );
         setHomework(res.data);
       } catch (e) {
@@ -140,7 +146,7 @@ export default function Homework() {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-white">
+    <div className="p-6 min-h-screen bg-white sm:ml-18 lg:ml-0">
       <h2 className="text-4xl font-bold text-black mb-6">Home Work</h2>
 
       {homework && homework.length > 0 ? (

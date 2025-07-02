@@ -278,7 +278,7 @@ export default function FlashCards() {
   }, []);
 
   return (
-    <section className="flashcards p-6 bg-white text-black h-full">
+    <section className="flashcards p-6 bg-white text-black h-full sm:ml-18 lg:ml-0">
       {selectedDeck ? (
         <></>
       ) : (

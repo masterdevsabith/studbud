@@ -92,7 +92,7 @@ export default function Attendance() {
   if (error) return <p className="p-6 text-red-600">{error}</p>;
 
   return (
-    <section className="h-full p-6 bg-white">
+    <section className="h-full p-6 bg-white sm:ml-18 lg:ml-0">
       <h2 className="text-3xl font-bold text-sky-700 mb-6 text-left">
         {currentDate.format("MMMM YYYY")} Attendance
       </h2>

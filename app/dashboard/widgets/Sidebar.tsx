@@ -31,6 +31,7 @@ export interface Tabs {
 export default function Sidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [closed, setClosed] = useState(false);
 
   const tabs: Tabs[] = [
     {
@@ -80,32 +81,55 @@ export default function Sidebar() {
   return (
     <>
       {/* Hamburger - visible only on small screens */}
-      <div className="md:hidden p-4 flex justify-between items-center border-b">
+      {/* <div className="md:hidden p-4 flex justify-between items-center border-b">
         <h2 className="text-2xl font-bold text-sky-600">StudBud</h2>
         <button onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
-      </div>
+      </div> */}
 
       {/* Sidebar */}
       <section
-        className={`h-screen sidebar bg-white border-r shadow-sm flex flex-col justify-between 
-        fixed z-50 top-0 left-0 transition-transform duration-300 
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-        md:translate-x-0 md:relative md:flex md:w-64`}
+        className={`lg:static h-screen pl-2 sidebar bg-white border-r shadow-sm flex flex-col justify-between transition-all duration-500 ${
+          closed ? "w-20" : "w-80"
+        } sm:absolute top-0 left-0 sm:z-50`}
       >
         {/* Header */}
-        <div className="py-6 border-b mb-6 hidden md:block">
-          <h2 className="text-4xl font-bold text-sky-600 tracking-tight text-center">
+        <div className="py-6 border-b mb-6 relative flex items-center justify-center">
+          <h2
+            className={`text-center text-4xl font-bold text-sky-600 tracking-tight  ${
+              closed ? "hidden" : ""
+            }`}
+          >
             StudBud
           </h2>
+          <div className={`close_btn ${closed ? "hidden" : ""} `}>
+            <button
+              className="absolute top-0 right-0 mt-4 mr-4 text-gray-500 hover:text-gray-700 transition"
+              onClick={() => setClosed(!closed)}
+            >
+              <X size={24} />
+            </button>
+          </div>
+          {closed && (
+            <button
+              className="text-center text-gray-500 hover:text-gray-700 transition"
+              onClick={() => setClosed(!closed)}
+            >
+              <Menu size={24} />
+            </button>
+          )}
         </div>
 
         {/* Tabs */}
         <div className="flex-1 overflow-auto">
           {Object.entries(groupedTabs).map(([section, groupTabs], i) => (
             <div key={i} className="mb-4">
-              <h3 className="text-gray-500 text-xs uppercase px-6 mb-2 font-semibold tracking-wider">
+              <h3
+                className={`text-gray-500 text-xs uppercase px-6 mb-2 font-semibold tracking-wider ${
+                  closed ? "hidden" : ""
+                }`}
+              >
                 {section}
               </h3>
               {groupTabs.map((tab, index) => {
@@ -130,7 +154,9 @@ export default function Sidebar() {
                         isActive ? "text-sky-500" : "text-gray-500"
                       }`}
                     />
-                    {tab.tabName}
+                    {closed ? null : tab.tabName}
+
+                    {/* {tab.tabName} */}
                   </button>
                 );
               })}
@@ -145,7 +171,10 @@ export default function Sidebar() {
             onClick={() => alert("Logging out...")}
           >
             <LogOutIcon size={18} />
-            <span className="text-sm font-medium">Logout</span>
+
+            <span className={`text-sm font-medium ${closed ? "hidden" : ""}`}>
+              Logout
+            </span>
           </button>
         </div>
       </section>

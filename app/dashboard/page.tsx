@@ -27,14 +27,14 @@ export default function DashboardPage() {
 
   return (
     <main className="h-screen flex overflow-hidden scrollbar-hide">
-      <div className="w-70 border-r bg-white">
+      <div className="border-r bg-white">
         <Sidebar />
       </div>
-      <div className="w-3/5 overflow-y-auto">
+      <div className="w-full overflow-y-auto">
         <MainSection />
       </div>
 
-      <div className="w-84 border-l bg-white">
+      <div className="sm:w-0 lg:w-84 border-l bg-white">
         <ProgressSidebar />
       </div>
     </main>
