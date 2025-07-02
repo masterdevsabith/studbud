@@ -176,12 +176,16 @@ export default function SingleFlashCard({
               >
                 {/* Front */}
                 <div className="absolute w-full h-full backface-hidden bg-white  rounded-md flex items-center justify-center shadow-md">
-                  <p className="text-lg font-semibold">{frontText}</p>
+                  <p className="text-lg font-semibold text-center">
+                    {frontText}
+                  </p>
                 </div>
 
                 {/* Back */}
                 <div className="absolute w-full h-full backface-hidden bg-sky-400  rounded-md rotate-y-180 flex items-center justify-center shadow-md">
-                  <p className="text-lg font-semibold">{backText}</p>
+                  <p className="text-lg font-semibold text-center">
+                    {backText}
+                  </p>
                 </div>
               </div>
             </div>

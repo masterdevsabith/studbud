@@ -66,7 +66,7 @@ export default function TeacherAnnouncement() {
   };
 
   return (
-    <section className="w-4/5 h-screen bg-gray-100 p-6 overflow-y-scroll">
+    <section className="w-full h-screen bg-gray-100 p-6 sm:ml-18 lg:ml-0 overflow-y-scroll">
       <div className="top flex items-center justify-between mb-6">
         <div className="left">
           <h2 className="text-2xl font-black text-black">Announcements</h2>
@@ -129,7 +129,7 @@ export default function TeacherAnnouncement() {
             <input
               type="text"
               required
-              className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm"
+              className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm"
               placeholder="Enter announcement title"
               value={form.title}
               onChange={(e) =>
@@ -145,7 +145,7 @@ export default function TeacherAnnouncement() {
             <textarea
               required
               rows={4}
-              className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm resize-none"
+              className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm resize-none"
               placeholder="Enter announcement description"
               value={form.description}
               onChange={(e) =>
@@ -161,7 +161,7 @@ export default function TeacherAnnouncement() {
             <input
               required
               type="number"
-              className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm"
+              className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm"
               placeholder="Eg: 9 or 10"
               value={form.classname}
               onChange={(e) =>

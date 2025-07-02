@@ -393,11 +393,12 @@ export default function FlashCards() {
                           { videoUrl: youtubeUrl }
                         );
 
-                        console.log("✅ Flashcards received:", response.data);
+                        // console.log("✅ Flashcards received:", response.data);
 
-                        const flashId = response.data[0].flash_id;
-                        // const flashId = "766faffd-4706-4c82-ac86-0b667117a2d7";
+                        // const flashId = response.data[0].flash_id;
+                        const flashId = "766faffd-4706-4c82-ac86-0b667117a2d7";
                         localStorage.setItem("flash_id", flashId);
+                        setLoading(false);
 
                         console.log(
                           "✅ flash_id saved in localStorage:",

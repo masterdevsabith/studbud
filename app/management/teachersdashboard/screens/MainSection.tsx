@@ -1,7 +1,10 @@
+import GreetingsCard from "../../../dashboard/widgets/GreetingsCard";
+
 export default function MainSection() {
   return (
-    <section className="w-4/5 h-screen bg-gray-100 p-6">
-      <div className="top flex items-center justify-between">
+    <section className="w-full h-screen bg-gray-100 p-6 sm:ml-18 lg:ml-0 overflow-y-scroll">
+      <GreetingsCard />
+      {/* <div className="top flex items-center justify-between">
         <div className="left">
           <h2 className="text-2xl font-black text-black">Welcome Sabith</h2>
           <p className="text-gray-600">
@@ -12,11 +15,10 @@ export default function MainSection() {
           <span className="text-gray-600">Today</span>
           <h4 className="font-semibold text-black">6/27/2025</h4>
         </div>
-      </div>
+      </div> */}
 
       <div className="bottom mt-6 space-y-6">
-        {/* Top Stat Cards */}
-        <div className="grid grid-cols-4 gap-4">
+        {/* <div className="grid grid-cols-4 gap-4">
           <div className="bg-white p-4 rounded-xl shadow-sm">
             <p className="text-gray-500 text-sm">Total Students</p>
             <h2 className="text-3xl font-bold text-black">6</h2>
@@ -37,7 +39,7 @@ export default function MainSection() {
             <h2 className="text-3xl font-bold text-black">5</h2>
             <p className="text-green-500 text-xs mt-1">→ Next: Tomorrow</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Quick Actions & Recent Activities */}
         <div className="grid grid-cols-2 gap-4">

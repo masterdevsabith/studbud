@@ -37,7 +37,7 @@ export default function DashboardScreenPage() {
     <>
       <section className="dashboard-main flex items-center justify-center ">
         <div className="dashboard-greetings w-6/6 bg-blue-700 p-8 rounded-2xl relative overflow-hidden">
-          <div className="z-10 max-w-[60%]">
+          <div className="z-10 lg:max-w-[60%] sm:max-w-[100%]">
             <h2 className="font-extrabold text-white text-5xl mb-2.5">
               Hello, {name ? name : "loading...."}👋
             </h2>
@@ -55,7 +55,7 @@ export default function DashboardScreenPage() {
               Join Learning
             </Link>
           </div>
-          <div className="absolute right-0 bottom-0 w-[200px] h-[200px] z-0">
+          <div className="absolute right-0 bottom-0 w-[200px] h-[200px] z-0 lg:block sm:hidden">
             <Image
               src="/assets/dashboard-avatar.png"
               alt="Character"

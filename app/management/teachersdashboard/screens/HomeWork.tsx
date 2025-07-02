@@ -68,7 +68,7 @@ export default function TeacherHomework() {
   }, [submit]);
 
   return (
-    <section className="w-4/5 h-screen bg-gray-100 p-6 overflow-y-scroll">
+    <section className="w-full h-screen bg-gray-100 p-6 sm:ml-18 lg:ml-0 overflow-y-scroll">
       <div className="top flex items-center justify-between mb-6">
         <div className="left">
           <h2 className="text-2xl font-black text-black">Homework</h2>
@@ -131,7 +131,7 @@ export default function TeacherHomework() {
             <input
               type="text"
               required
-              className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm"
+              className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm"
               placeholder="Enter homework title"
               value={form.title}
               onChange={(e) =>
@@ -146,7 +146,7 @@ export default function TeacherHomework() {
             </label>
             <textarea
               required
-              className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm resize-none"
+              className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm resize-none"
               placeholder="Homework question or task"
               value={form.question}
               onChange={(e) =>
@@ -163,7 +163,7 @@ export default function TeacherHomework() {
               <input
                 type="number"
                 required
-                className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm"
+                className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm"
                 placeholder="Eg: 30"
                 value={form.duration}
                 onChange={(e) =>
@@ -179,7 +179,7 @@ export default function TeacherHomework() {
               <input
                 type="number"
                 required
-                className="w-full border border-gray-300 px-4 py-2 rounded-md text-sm"
+                className="w-full border text-gray-950 border-gray-300 px-4 py-2 rounded-md text-sm"
                 placeholder="Eg: 9 or 10"
                 value={form.classname}
                 onChange={(e) =>
